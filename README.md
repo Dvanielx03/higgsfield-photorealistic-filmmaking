@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/banner.png" alt="Higgsfield Photorealistic Filmmaking: skill de Claude Code para video fotorrealista con IA" width="100%">
+<img src="assets/banner.svg" alt="Higgsfield Photorealistic Filmmaking" width="100%">
 
 [![Claude Code Skill](https://img.shields.io/badge/Claude_Code-Skill-D97757?style=flat-square&labelColor=0F1113)](https://docs.claude.com/en/docs/claude-code/skills)
 [![Higgsfield](https://img.shields.io/badge/Higgsfield-Seedance_2.5-D1FE17?style=flat-square&labelColor=0F1113)](https://higgsfield.ai)
@@ -170,8 +170,7 @@ higgsfield-photorealistic-filmmaking/
 ├── scripts/
 │   └── frames.sh                Primer y último fotograma, hoja de contacto
 └── assets/
-    ├── banner.html              Fuente editable del banner
-    └── banner.png
+    └── banner.svg               Banner del README (editable)
 ```
 
 <details>
