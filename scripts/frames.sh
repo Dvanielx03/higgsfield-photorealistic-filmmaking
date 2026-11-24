@@ -4,9 +4,11 @@
 #   frames.sh first <video> <salida.png>        primer fotograma
 #   frames.sh at    <video> <segundos> <salida.png>   fotograma en un instante
 #   frames.sh sheet <video> [salida.png] [fps]  hoja de contacto (por defecto 2 fps)
+#   frames.sh compare <video> <segundos> <referencia.png> <salida.png>   fotograma junto a su referencia
+#   frames.sh info  <video>                     duración, resolución, fps y audio (para el control de calidad)
 set -euo pipefail
 mode="${1:-}"; src="${2:-}"
-[[ -z "$mode" || -z "$src" ]] && { sed -n '2,6p' "$0"; exit 1; }
+[[ -z "$mode" || -z "$src" ]] && { sed -n '2,8p' "$0"; exit 1; }
 [[ -f "$src" ]] || { echo "No existe: $src" >&2; exit 1; }
 
 case "$mode" in
@@ -44,6 +46,19 @@ case "$mode" in
       echo "Hoja sin marcas de tiempo: celda i = i/$fps s" >&2
     fi
     ;;
-  *) sed -n '2,6p' "$0"; exit 1 ;;
+  compare)
+    t="${3:?falta segundos}"; ref="${4:?falta referencia}"; out="${5:?falta salida}"
+    [[ -f "$ref" ]] || { echo "No existe: $ref" >&2; exit 1; }
+    # Ambas a 720 px de alto, una junto a la otra: referencia | fotograma.
+    ffmpeg -v error -y -i "$ref" -ss "$t" -i "$src" \
+      -filter_complex "[0:v]scale=-2:720,setsar=1[a];[1:v]scale=-2:720,setsar=1[b];[a][b]hstack=inputs=2" \
+      -frames:v 1 "$out"
+    ;;
+  info)
+    ffprobe -v error -show_entries format=duration:stream=codec_type,width,height,r_frame_rate \
+      -of default=noprint_wrappers=1 "$src"
+    exit 0
+    ;;
+  *) sed -n '2,8p' "$0"; exit 1 ;;
 esac
 echo "OK → ${out:-}"
