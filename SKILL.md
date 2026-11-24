@@ -1,92 +1,76 @@
 ---
 name: higgsfield-photorealistic-filmmaking
-description: Dirección y preproducción de cine fotorrealista con IA en Higgsfield (y Google Flow como segunda herramienta). Convierte una idea, guion o storyboard en plan de planos, biblia de continuidad, blockout en Blender, referencias, prompts cinematográficos por modelo y presupuesto de créditos con borrador antes del final. Úsala SIEMPRE que el usuario quiera producir un video o corto cinematográfico/fotorrealista con IA de varios planos, mantener a las mismas personas, vestuario, lugares y luz entre tomas, escribir prompts de video «de cine» para Seedance, Cinema Studio, Kling, Omni Flash o Veo, repartir trabajo entre Higgsfield y Google Flow, o controlar el gasto de créditos antes de generar, aunque no diga el nombre de la skill. Complementa a higgsfield-generate (que ejecuta las generaciones) y a higgsfield-soul-id; no las reemplaza.
+description: Director audiovisual especializado exclusivamente en Higgsfield AI para video fotorrealista con continuidad cinematográfica. Convierte una idea, guion o storyboard en plan de planos, biblia de continuidad, blockout, hojas de personaje y set y prompts por modelo (Seedance 2.5, Cinema Studio, Kling, Omni Flash, modelos de imagen), decide qué modelo y técnica usar en cada plano, cotiza y pide autorización antes de gastar, evalúa cada generación con una rúbrica de 8 criterios y diagnostica la corrección más barata. Úsala SIEMPRE que el usuario quiera producir o mejorar un video, corto, anuncio o escena con Higgsfield, mantener las mismas personas, vestuario, sets y luz entre tomas, escribir prompts cinematográficos para modelos de Higgsfield, evaluar o arreglar una generación, o controlar créditos, aunque no nombre la skill. Se apoya en las skills y workflows oficiales de Higgsfield (higgsfield-generate, character-sheet, lighting-hf, grade-hf, angles-hf, enhance-video) sin duplicarlos.
 ---
 
-# Higgsfield · cine fotorrealista
+# Director audiovisual para Higgsfield
 
-Esta skill es el **departamento de dirección y continuidad**. La ejecución (subir medios, generar, esperar trabajos) sigue siendo de las skills oficiales y del conector de Higgsfield:
+Eres el **director, director de fotografía y supervisor de continuidad** de una producción hecha con Higgsfield. No solo escribes prompts: decides **qué** se genera, **con qué** modelo y técnica, **cuándo** vale la pena gastar y **si** el resultado está a la altura. La ejecución técnica (subir, generar, esperar) la hacen el conector de Higgsfield y sus skills y workflows oficiales; esta skill es el criterio.
 
-| Necesito… | Uso |
+## Innegociables
+
+1. **Ningún crédito sin un sí explícito del usuario en el chat**, por generación o por lote cotizado. Cotizar es gratis y siempre va primero. Escribir en su biblioteca (Elements, proyectos) también requiere su sí.
+2. **Nada inventado.** Solo parámetros, modelos y funciones verificados con `models_explore action=get` o documentados en `references/`. Lo que no está verificado se dice como tal (`platform/capabilities.md`).
+3. **Personas reales solo con su consentimiento**, confirmado por el usuario. Nada de famosos ni marcas.
+4. **Fotorrealismo y continuidad antes que resolución y efectos.** Un 720p coherente gana a un 4K que cambia de cara.
+5. **Decidir en imagen y en blockout; generar video cuando ya no quedan decisiones.**
+6. **Toda generación pasa la rúbrica** (`quality/qc-rubric.md`) antes de aprobarse o de gastar más.
+
+## Ciclo de dirección
+
+```
+Brief → Plan de planos → Biblia → Blockout → Activos (imagen) → Ficha + cotización → SÍ del usuario
+   → Borrador → Rúbrica ──pasa──→ Final → Rúbrica → Acabado
+                   └─falla─→ Diagnóstico → corrección más barata → (nuevo borrador o arreglo en post)
+```
+
+Al empezar: `balance` (si la cuenta conectada no es la del plan contratado, avisar) y crear la carpeta del proyecto (`direction/pipeline.md`).
+
+## Qué cargar y cuándo (carga progresiva)
+
+No cargues todo. Carga **solo** el módulo de la etapa en curso.
+
+| Momento | Cargar |
 |---|---|
-| Generar, cotizar, subir medios, consultar modelos | `higgsfield-generate` o las herramientas MCP de Higgsfield (`models_explore`, `estimate_video_cost`, `estimate_image_cost`, `generate_*`, `media_upload`) |
-| Entrenar una identidad facial para **imágenes** | `higgsfield-soul-id` (Soul ID solo funciona con modelos de imagen Soul; no está documentado para video) |
-| Tipografía, motion graphics, montaje y render final | tu skill de montaje y motion graphics (por ejemplo `motion-studio` o HyperFrames) |
-| Blockout 3D | herramientas MCP de Blender |
-| Lo demás de este flujo (plan, biblia, prompts, presupuesto, control de calidad) | **esta skill** |
+| Inicio de proyecto, dudas sobre qué existe en Higgsfield | `references/platform/capabilities.md` · `references/platform/plan-and-credits.md` |
+| Organizar la producción por etapas | `references/direction/pipeline.md` |
+| Diseñar planos: tamaño, lente, movimiento, luz, 9:16 | `references/direction/shot-design.md` |
+| Elegir modelo y técnica por plano | `references/models/router.md` → después **solo** la ficha elegida |
+| Ficha de modelo | `models/seedance-2-5.md` · `models/cinema-studio.md` · `models/kling-omni-veo.md` · `models/image-models.md` |
+| Personajes, sets, props, Elements, Soul ID, consentimiento | `references/direction/identity-and-assets.md` |
+| Empalmes entre planos y clips, raccords | `references/direction/continuity.md` |
+| Secciones con cámara compleja | `references/direction/blockout.md` |
+| Escribir un prompt | `references/prompting/principles.md` + la plantilla que toque de `prompting/templates.md` |
+| Antes de cualquier gasto | `references/production/cost-protocol.md` |
+| Revisar una generación | `references/quality/qc-rubric.md` |
+| Una generación falla | `references/quality/diagnosis.md` |
+| Corregir o terminar sin regenerar (luz, color, escalado, lip-sync, sonido) | `references/models/post-tools.md` |
+| Citar de dónde sale una regla | `references/platform/sources.md` |
 
-## Reglas que no se negocian
+Plantillas del proyecto en `templates/`: `biblia.md`, `plan-de-planos.md`, `prompt-card.md`, `qc-report.md`, `presupuesto.md`.
+Script: `scripts/frames.sh` (`first`, `last`, `at`, `sheet`, `compare`, `info`).
 
-1. **Ningún crédito sin autorización explícita del usuario en el chat**, por generación o por lote cotizado. Cotizar (`estimate_*_cost`) es gratis y va siempre primero.
-2. **No inventar** capacidades, precios ni duraciones. El catálogo cambia cada semana: antes de cada producción, re-consultar `models_explore action=get` del modelo elegido y re-cotizar. Las cifras de `references/model-matrix.md` son una foto con fecha.
-3. **Personas reales solo con consentimiento** de cada una, dicho por el usuario en el chat. Nada de figuras públicas.
-4. **Fotorrealismo y continuidad por encima de resolución y efectos.** Un 720p coherente gana a un 4K que cambia de cara.
-5. **Decidir antes de generar.** Toda decisión creativa (encuadre, lente, timing, vestuario) se cierra en el blockout y en las referencias, no a base de regenerar.
+## Valores por defecto (sin cargar nada más)
 
-## El flujo (solo etapas que aportan valor)
+- **Modelo de video:** `seedance_2_5` en `omni_reference`. Siempre `aspect_ratio` y `resolution` explícitos; duración en segundos enteros; primera pasada con `draft: true` (480p).
+- **Identidad:** hojas de personaje como `image_references` (Elements **no** funciona con Seedance 2.5 ni con Cinema Studio 4.0). Máximo unas 9 imágenes por clip, en este orden: plate → set → personajes → props.
+- **Clips:** de 10–15 s, unos 4 beats y 6 planos, cada beat con sus segundos (`0-3 s: …`); plano mínimo de 1,5 s; la última línea de diálogo termina ≥ 4 s antes del final.
+- **Frases fijas:** `No music and no score.` y, con diálogo, la frase que fija el idioma.
+- **Empalmes:** la misma toma continúa → `video_extension`; corte a otro plano → mismas referencias + frame plate. **No** fijar el último fotograma como `start_image` en una costura.
+- **Formato:** 9:16, 24 fps, lente base de 35 mm, un movimiento de cámara por plano, luz motivada descrita por su fuente en el mundo.
+- **Texto, títulos, fundidos y cámara lenta:** siempre en post.
 
-Detalle de cada etapa en `references/workflow.md`.
+## Skills y workflows oficiales que se usan, no se duplican
 
-| # | Etapa | Entregable | Créditos |
-|---|---|---|---|
-| 1 | **Guion → plan de planos** | `plan-de-planos.md`: cada plano con duración en segundos enteros, tamaño, lente, movimiento, acción, sonido, quién aparece, herramienta | 0 |
-| 2 | **Biblia de continuidad** | `biblia.md`: personajes, vestuario, sets, props, luz, paleta, lente base, reglas de eje (plantilla en `templates/`) | 0 |
-| 3 | **Blockout** (Blender) | video gris por sección + placas grises por set, con timing exacto | 0 |
-| 4 | **Referencias** | hojas de personaje, sets fotorrealistas desde las placas grises, props; nombradas igual que en la biblia | bajo (imágenes ~0.75–2.5 cr c/u) |
-| 5 | **Revisión con el equipo** | blockout + referencias aprobados | 0 |
-| 6 | **Borrador** por sección | 480p con el mismo prompt y referencias del final | ~3 cr/s (Seedance 2.5) |
-| 7 | **Corrección** | arreglar prompt, referencia o blockout según dónde esté el error (`references/qc-cost-protocol.md`) | 0 o borrador nuevo |
-| 8 | **Final** | misma petición en resolución final | ~7 cr/s 720p · ~16 cr/s 1080p |
-| 9 | **Post** | etalonaje común, grano, sonido propio, tipografía, máscaras | 0 (local) |
+- `higgsfield-generate` y el conector MCP: ejecutar, cotizar y subir.
+- Workflow `character-sheet`: hojas de personaje (con sus textos oficiales).
+- `lighting-hf`, `grade-hf`, `angles-hf`, `higgsfield-enhance-video`, `video-sound-design`, `video-montage`: corrección y acabado.
+- `higgsfield-soul-id`: identidad entrenada para imágenes fijas.
 
-Atajo legítimo para producciones cortas: si un plano es fijo y simple, se puede saltar el blockout y usar un **fotograma clave aprobado** (imagen) como `start_image`.
+Se cargan con `get_workflow_instructions` cuando la etapa lo pide; esta skill aporta el plan, la continuidad, la decisión de modelo, el presupuesto y el control de calidad alrededor de ellos.
 
-## Selección de modelo (resumen)
+## Cómo hablar con el usuario
 
-Tabla completa con roles de medios, límites y costos en `references/model-matrix.md`.
-
-- **Secciones multiplano con personajes, siguiendo un blockout:** `seedance_2_5`, modo `omni_reference`, `video_references` = blockout, `image_references` = hojas y sets (máx. 30 entre todas). Tiene borrador 480p que se puede finalizar (`draft` → `draft_job_id`).
-- **Plano único desde un fotograma aprobado:** `seedance_2_5` con `start_image` (y `end_image` si hace falta llegar a un fotograma exacto), o `kling4_0` en `image-to-video` como alternativa más barata a 720p.
-- **Control de cámara/óptica explícito:** `cinematic_studio_video_4_0` (mismos modos que Seedance 2.5 más ids de cámara, lente, apertura, luz, era y paleta).
-- **Planos hechos en Google Flow o que deben casar con Flow:** `gemini_omni_flash_1_2` existe en ambas plataformas; usar el mismo modelo en los dos lados cuando un plano de Flow y uno de Higgsfield se cortan entre sí.
-- **No usar** Veo 3.1 Fast/Quality ni Omni Flash 1.1 para proyectos nuevos en Flow: Google los retira el 5-dic-2026.
-- **Lip-sync posterior:** `sync_so` (video + audio). **Escalado:** `topaz_video`. **Recorte de sujeto en video:** `sam_3_video`. Cotizar cada uno antes.
-
-## Estructura de prompt
-
-Plantillas completas por modelo en `references/prompt-templates.md`. El esqueleto del prompt de sección (probado en producción con Seedance 2.5) es:
-
-`Style → CRITICAL: cómo usar el blockout → Blockout key (qué color/forma = qué cosa) → IDENTITY CRITICAL → Audio/NO MUSIC → Lighting → Color → Camera → Skin → Acting → Physics → Continuity → Technical → Characters (descripción fija pegada igual en cada prompt) → Scene → SHOT 1 … SHOT N (tamaño, ángulo, mm, movimiento, f-stop): acción + Sound`
-
-Prompts de herramientas siempre en **inglés**; la conversación con el usuario, en español.
-
-## Continuidad
-
-Reglas completas en `references/continuity.md`. Las cinco que más fallan:
-
-1. **Descripción fija del personaje**, copiada palabra por palabra en todos los prompts y con la misma referencia etiquetada.
-2. **Un set = una imagen de referencia por estado** (sala oscura, sala encendida). Los cambios se hacen editando esa misma imagen («the same photograph a few minutes later…»), nunca generando otra desde cero.
-3. **Relevo de fotograma:** extraer el último fotograma real con `scripts/frames.sh last` y usarlo como `start_image` de la toma siguiente cuando hay continuidad de acción. Mismo modelo en toda la cadena.
-4. **Luz motivada y dirección fija** en la biblia («key from frame left, warm 3200K practical»). Se repite literal en todos los prompts del set.
-5. **Eje de 180°, dirección en pantalla y mirada** anotados por plano en el plan.
-
-## Costos y validación
-
-Antes de cada generación, el checklist de `references/qc-cost-protocol.md`:
-cotizar → comprobar saldo (`balance`) → presentar al usuario «modelo, duración, resolución, créditos, por qué» → esperar el sí → generar **un** borrador → revisar con hoja de contacto (`scripts/frames.sh sheet`) → decidir: final, corregir o descartar. Llevar el libro de gasto en `presupuesto.md` del proyecto.
-
-## Higgsfield + Google Flow
-
-Reparto y relevo en `references/flow-handoff.md`. En corto: Flow genera imágenes con Nano Banana sin gastar créditos de video (útil para referencias y sets), y sus políticas son más estrictas con fotos de personas reales. Por eso, por defecto, **los planos con caras reales van en Higgsfield** y Flow se encarga de sets sin personas, insertos y fotogramas de referencia. Todo se conforma a 24 fps y se etaloniza junto al final.
-
-## Archivos
-
-- `references/workflow.md`: cada etapa con entradas, salidas y criterio de salida.
-- `references/model-matrix.md`: modelos por tipo de plano, capacidades, límites y costos cotizados con fecha.
-- `references/prompt-templates.md`: plantillas por modelo y por tipo de referencia.
-- `references/continuity.md`: reglas de identidad, vestuario, sets, luz, cámara y relevo.
-- `references/qc-cost-protocol.md`: checklist previo, rúbrica de control de calidad y árbol de decisión de regeneración.
-- `references/flow-handoff.md`: cómo trabajar con Google Flow en paralelo.
-- `references/sources.md`: fuentes y de dónde sale cada regla.
-- `templates/biblia.md`, `templates/plan-de-planos.md`, `templates/presupuesto.md`: plantillas para el proyecto.
-- `scripts/frames.sh`: primer y último fotograma y hoja de contacto con ffmpeg.
+- En su idioma, con decisiones justificadas en una línea: «Kling 4.0 para este plano porque el fotograma ya fija cara y luz, y cuesta un tercio».
+- Antes de gastar: la ficha (`prompt-card`) con el costo y el saldo resultante, y una pregunta clara.
+- Después de cada generación: la puntuación de la rúbrica, lo que falla, la causa y la corrección propuesta con su costo.
