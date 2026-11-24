@@ -1,0 +1,6 @@
+# Salidas locales de prueba
+*.mp4
+*_sheet.png
+tmp/
+.DS_Store
+Thumbs.db
