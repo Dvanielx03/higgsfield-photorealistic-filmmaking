@@ -25,6 +25,8 @@ Generar video con IA suele parecer una tragamonedas: se regenera hasta que algo 
 |---|---|
 | La cara, la ropa o el set cambian entre tomas | Hojas de personaje como referencias, frame plates por set, descripciones fijas, máximo ~9 referencias por clip, empalmes con extensión o con plates (nunca con `start_image` en la costura) |
 | Encuadre y timing al azar | Plan de planos con lente, movimiento e intención, y un blockout (Blender, 3D Jutsu o Genjutsu) como `video_references` |
+| Referencias que el modelo usa cuando quiere | **Mapa temporal**: cada referencia atada a sus segundos, videos y audios recortados a su tramo, desglose con timecode de los videos de inspiración |
+| Música donde no tocaba, o silencio donde había que oír algo | **Audio por tramo**: cada tramo declara música, efectos, ambiente, diálogo o silencio, y se verifica en el control de calidad |
 | Prompts genéricos que «parecen IA» | Estructura oficial por modelo, vocabulario físico de cámara y luz, actuación con microgestos y redacción positiva |
 | Elegir modelo por moda | Un router por tipo de plano: Seedance 2.5, Cinema Studio 4.0/3.5, Kling 4.0, Omni Flash e imagen |
 | Créditos gastados en pruebas | Cotización obligatoria, borrador 480p finalizable, escalera de costos, presupuesto con reserva y libro de gasto |
@@ -68,7 +70,7 @@ Cada etapa tiene una puerta de salida (`references/direction/pipeline.md`). El u
 | [Claude Code](https://docs.claude.com/en/docs/claude-code) | Ejecutar la skill |
 | Conector MCP o CLI de [Higgsfield](https://higgsfield.ai) con un plan de pago | Cotizar, subir y generar |
 | [Blender](https://www.blender.org/download/) 5.1+ con el [MCP oficial](https://www.blender.org/lab/mcp-server/) | Blockout (opcional; alternativas: 3D Jutsu, Genjutsu) |
-| `ffmpeg` y `ffprobe` | `scripts/frames.sh` |
+| `ffmpeg`, `ffprobe` y Python 3 | `scripts/frames.sh` y `scripts/timeline.py` |
 
 ```bash
 git clone https://github.com/Dvanielx03/higgsfield-photorealistic-filmmaking.git \
@@ -95,6 +97,9 @@ Haz las hojas de personaje de los dos protagonistas con estas fotos (tienen su c
 Escribe la ficha de la sección S2 para Seedance 2.5 con el blockout y las hojas, y cotiza el borrador.
 ```
 ```text
+Desglosa este reel de referencia con marcas de tiempo y dime qué tomamos de cada plano y qué audio lleva cada tramo.
+```
+```text
 Evalúa este borrador con la rúbrica y dime la corrección más barata.
 ```
 ```text
@@ -118,6 +123,7 @@ higgsfield-photorealistic-filmmaking/
 │   │   ├── shot-design.md           Tamaños, lentes, movimiento motivado, luz, 9:16, ritmo
 │   │   ├── identity-and-assets.md   Hojas, Elements, Soul ID, consentimiento, sets, props
 │   │   ├── continuity.md            Empalmes, raccords, luz y color entre clips
+│   │   ├── reference-timeline.md    Referencias atadas a sus segundos y audio por tramo
 │   │   └── blockout.md              Blender, 3D Jutsu, Genjutsu, plugin de Blender
 │   ├── models/
 │   │   ├── router.md                Árbol de decisión y matriz de costos
@@ -134,8 +140,10 @@ higgsfield-photorealistic-filmmaking/
 │   │   └── diagnosis.md             Síntoma → causa → corrección, escalera de estrategias
 │   └── production/
 │       └── cost-protocol.md         Checklist previo, reglas de gasto, presupuesto
-├── templates/                       biblia · plan-de-planos · prompt-card · qc-report · presupuesto
-├── scripts/frames.sh                first · last · at · sheet · compare · info
+├── templates/                       biblia · plan-de-planos · prompt-card · referencias · qc-report · presupuesto
+├── scripts/
+│   ├── frames.sh                    first · last · at · sheet · compare · info
+│   └── timeline.py                  cuts · breakdown · trim · drift
 └── assets/banner.svg
 ```
 
