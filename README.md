@@ -61,6 +61,34 @@ flowchart LR
 
 <sub>Gris: 0 créditos · lima: consume créditos</sub>
 
+### Dos rutas para sacar más videos de 1.000 créditos
+
+```mermaid
+flowchart LR
+    M[Música] --> B[beats.py<br/>cortes a ritmo]
+    B --> P[plan.json]
+    P --> R[run_blockout.py<br/>Blender sin interfaz]
+    R --> V[blockout.mp4]
+    R --> K[keyframes]
+    V --> S[Ruta S · Seedance 2.5<br/>planos héroe, caras, diálogo]
+    K --> F[Keyframes fotorrealistas<br/>Cinema Studio Image]
+    F --> KL[Ruta K · Kling 4.0<br/>planos sencillos, producto, B-roll]
+    KL -->|falla la rúbrica| S
+
+    classDef free fill:#1C1E21,stroke:#383E46,color:#F7F7F8
+    classDef paid fill:#0F1113,stroke:#D1FE17,color:#D1FE17
+    class M,B,P,R,V,K free
+    class S,F,KL paid
+```
+
+| Pieza de 30 s (finales a 720p) | ≈ Créditos | Piezas por mes con 1.000 |
+|---|---|---|
+| Seedance 2.5 en todos los planos | 450 | 2 |
+| **Híbrido 70 % Kling / 30 % Seedance** | **280** | **3** |
+| Kling 4.0 en todos los planos | 200 | 5 |
+
+Kling 4.0 **no** se usa con el blockout como video de referencia, porque no lo lee; se usa con keyframes. Así lo mostró la [prueba pública de Thomas Lundström](https://www.youtube.com/watch?v=ECxZEbUdSlE). Detalle en [`references/production/blender-kling-seedance.md`](references/production/blender-kling-seedance.md).
+
 Cada etapa tiene una puerta de salida (`references/direction/pipeline.md`). El usuario aprueba en tres puntos: brief, blockout más activos, y cada gasto de video.
 
 ## Instalación
@@ -69,8 +97,8 @@ Cada etapa tiene una puerta de salida (`references/direction/pipeline.md`). El u
 |---|---|
 | [Claude Code](https://docs.claude.com/en/docs/claude-code) | Ejecutar la skill |
 | Conector MCP o CLI de [Higgsfield](https://higgsfield.ai) con un plan de pago | Cotizar, subir y generar |
-| [Blender](https://www.blender.org/download/) 5.1+ con el [MCP oficial](https://www.blender.org/lab/mcp-server/) | Blockout (opcional; alternativas: 3D Jutsu, Genjutsu) |
-| `ffmpeg`, `ffprobe` y Python 3 | `scripts/frames.sh` y `scripts/timeline.py` |
+| [Blender](https://www.blender.org/download/) 4.2+ (probado en 5.2) | Blockout automático sin interfaz (`run_blockout.py`); el [MCP oficial](https://www.blender.org/lab/mcp-server/) es opcional para retocar la escena |
+| `ffmpeg`, `ffprobe`, Python 3 y numpy | Scripts de `scripts/` |
 
 ```bash
 git clone https://github.com/Dvanielx03/higgsfield-photorealistic-filmmaking.git \
@@ -95,6 +123,9 @@ Haz las hojas de personaje de los dos protagonistas con estas fotos (tienen su c
 ```
 ```text
 Escribe la ficha de la sección S2 para Seedance 2.5 con el blockout y las hojas, y cotiza el borrador.
+```
+```text
+Arma el blockout de este guion con la música que te paso, decide qué planos van por Kling y cuáles por Seedance, y dime cuántos créditos cuesta.
 ```
 ```text
 Desglosa este reel de referencia con marcas de tiempo y dime qué tomamos de cada plano y qué audio lleva cada tramo.
@@ -139,11 +170,18 @@ higgsfield-photorealistic-filmmaking/
 │   │   ├── qc-rubric.md             8 criterios, umbrales y decisión
 │   │   └── diagnosis.md             Síntoma → causa → corrección, escalera de estrategias
 │   └── production/
-│       └── cost-protocol.md         Checklist previo, reglas de gasto, presupuesto
+│       ├── cost-protocol.md         Checklist previo, reglas de gasto, presupuesto
+│       └── blender-kling-seedance.md  Flujo automatizado Blender → ruta K (Kling) / ruta S (Seedance)
 ├── templates/                       biblia · plan-de-planos · prompt-card · referencias · qc-report · presupuesto
 ├── scripts/
 │   ├── frames.sh                    first · last · at · sheet · compare · info
-│   └── timeline.py                  cuts · breakdown · trim · drift
+│   ├── timeline.py                  cuts · breakdown · trim · drift
+│   ├── beats.py                     música → tempo y cortes a ritmo
+│   ├── run_blockout.py              plan.json → blockout de Blender → fichas K y S (un comando)
+│   ├── prompt_skeleton.py           timeline.json → prompt de Kling o de Seedance con tiempos
+│   └── blockout/
+│       ├── build_blockout.py        constructor de Blender sin interfaz
+│       └── plan.example.json        formato del plan
 └── assets/banner.svg
 ```
 
