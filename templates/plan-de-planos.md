@@ -6,9 +6,9 @@
 | S1 | 0:00–0:08 | 8 | <set> | multiplano + blockout | `seedance_2_5` · `omni_reference` | plate, set, A, B | P1–P3 | 3, 5 |
 
 ## Planos
-| Id | Sección | Dur. | Intención (qué cuenta · qué hace sentir) | Tamaño / ángulo | mm · f | Movimiento | Quién (nº en plano) | Acción (1 momento) | Mirada / dirección | Sonido | Post (texto, FX) |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| S1-P1 | S1 | 3 | <…> | PG, alto | 24 · f/2.8 | crane down | <ids> (2) | <acción> | <hacia> | <sfx> | <texto> |
+| Id | Sección | Dur. | Intención (qué cuenta · qué hace sentir) | Tamaño / ángulo | mm · f | Movimiento | Quién (nº en plano) | Acción (1 momento) | Mirada / dirección | Refs activas (tags) | Audio del tramo (tipo · origen) | Post (texto, FX) |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| S1-P1 | S1 | 3 | <…> | PG, alto | 24 · f/2.8 | crane down | <ids> (2) | <acción> | <hacia> | `@Image1` `@Image3` `@vid1` | efectos: puerta a 0:01,2 · modelo | <texto> |
 
 ## Empalmes
 | De | A | Tipo (extensión · corte con plate · start_image) | Qué cambia en la costura |

@@ -17,6 +17,18 @@
 | Criterios de QC más exigentes para este plano | p. ej. 3 y 5 (primer plano) |
 | Plan B si falla | |
 
+## Mapa temporal de referencias y audio
+
+> Obligatorio. Método en `references/direction/reference-timeline.md`.
+
+| Tramo del clip | Plano | Referencias activas (tags) | Qué define cada una aquí | Fuente y tramo de origen | Audio del tramo (música · efectos · ambiente · diálogo · silencio) | Origen del audio (modelo · referencia · post) |
+|---|---|---|---|---|---|---|
+| 0–3 s | P1 | | | | | |
+
+- Videos y audios de referencia recortados al tramo exacto (`timeline.py trim`): ☐
+- `generate_audio`: <true / false> · ¿algún tramo pide música al modelo?: <no / sí, con autorización>
+- Cortes planeados para verificar con `timeline.py drift`: <3, 6, 10>
+
 ## Prompt (inglés)
 
 ```

@@ -22,8 +22,9 @@ Skin: Pore-level realism, natural texture, unretouched.
 Acting: Understated and real. Micro-pauses before reactions, precise eye-line, living eyes, visible breathing.
 Physics: Real weight and inertia, correct contact shadows, cloth and hair react to movement.
 Characters: <PERSON A>: <fixed bible description>. <PERSON B>: …
-SHOT 1 (0-3 s · <size>, <angle>, <mm>, <movement>): <how many people in frame>. <one concrete action>. <face: brows, eyes, mouth>. Sound: <owned sound>.
-SHOT 2 (3-6 s · …): …
+SHOT 1 (0-3 s · <size>, <angle>, <mm>, <movement> · @Image3 @vid1): <how many people in frame>. <one concrete action>. <face: brows, eyes, mouth>. Sound: <owned sound or "in silence">.
+SHOT 2 (3-6 s · … · @Image3 @vid1): … At 3.2 seconds, <the door slams>. Sound: <the slam, heavy wooden door, close>.
+Audio: <per-segment audio from the clip's timeline map: ambience, effects, dialogue, silence>. No music and no score. (Only if a segment explicitly asks the model for music: "From <a> to <b> seconds, (music: <style, instruments, energy>)".)
 Hold: <characters, props, sky and light that stay the same throughout>.
 ```
 
@@ -34,14 +35,16 @@ Para escenas sencillas donde el encuadre puede describirse con palabras. Clips d
 ```
 Style: <style line> <video words>.
 @Image1 is <place>. @Image2 is <PERSON A>, one <man/woman>, shown from several angles.
-0-3 s: <framing>. <how many in frame>. <action>. <face>.
-3-6 s: <framing>. …
-6-10 s: <framing>. … <PERSON A> says, <how>: "<line>".
-10-14 s: <framing>, in silence, <action>.
+0-3 s (@Image1 @Image2): <framing>. <how many in frame>. <action>. <face>. Ambience: <…>.
+3-6 s (@Image2): <framing>. … At 4 seconds, <event>. Sound: <owned sound>.
+6-10 s (@Image2): <framing>. … At 6.5 seconds, <PERSON A> says, <how>: "<line>".
+10-14 s (@Image2): <framing>, in silence, <action>.
 Every spoken line is in <language>, exactly the words in quotes; nobody speaks any other language.
 No music and no score. <sound effects named on their owner>.
 Hold: <characters, props, sky and light>.
 ```
+
+> Cada beat lleva sus segundos y las etiquetas que actúan en él, y su audio sale del mapa temporal (`direction/reference-timeline.md`).
 
 ## C. Plano único desde un fotograma aprobado · Kling 4.0 `image-to-video` / Seedance 2.5 `start_image`
 

@@ -65,7 +65,7 @@ Orden validado por el workflow oficial `drama-ads`, combinado con las secciones 
 1. **Línea de estilo** y «video words» (cómo se rueda: lentes, cámara, actuación).
 2. **Bloque de blockout** si hay `video_references` (ver `prompting/templates.md` A).
 3. **Etiquetas de referencias**, en el orden en que se envían: `@Image1 is <the place>…; @Image2 is <name>, <look>`. Añadir o quitar una imagen **renumera todas las siguientes**.
-4. **Beats**, cada uno en su párrafo y empezando por sus segundos: `0-3 s: <framing>, <action>`.
+4. **Beats**, cada uno en su párrafo y empezando por sus segundos, con las etiquetas que actúan en él: `0-3 s (@Image3 @vid1): <framing>, <action>` (mapa temporal en `direction/reference-timeline.md`).
 5. **Diálogo**: quién habla, las palabras entre comillas y cómo lo dice.
 6. **Efectos de sonido**, nombrados sobre quien los produce.
 7. **Frase de mantenimiento** al final: los personajes, props, cielo y luz que no cambian.

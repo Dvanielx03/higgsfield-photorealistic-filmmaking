@@ -40,6 +40,7 @@ No cargues todo. Carga **solo** el módulo de la etapa en curso.
 | Personajes, sets, props, Elements, Soul ID, consentimiento | `references/direction/identity-and-assets.md` |
 | Empalmes entre planos y clips, raccords | `references/direction/continuity.md` |
 | Secciones con cámara compleja | `references/direction/blockout.md` |
+| **Referencias con marcas de tiempo y audio por tramo** (siempre que haya referencias o audio) | `references/direction/reference-timeline.md` |
 | Escribir un prompt | `references/prompting/principles.md` + la plantilla que toque de `prompting/templates.md` |
 | Antes de cualquier gasto | `references/production/cost-protocol.md` |
 | Revisar una generación | `references/quality/qc-rubric.md` |
@@ -48,14 +49,17 @@ No cargues todo. Carga **solo** el módulo de la etapa en curso.
 | Citar de dónde sale una regla | `references/platform/sources.md` |
 
 Plantillas del proyecto en `templates/`: `biblia.md`, `plan-de-planos.md`, `prompt-card.md`, `qc-report.md`, `presupuesto.md`.
-Script: `scripts/frames.sh` (`first`, `last`, `at`, `sheet`, `compare`, `info`).
+Plantillas extra: `referencias.md` (desglose con timecode y audio por tramo).
+Scripts: `scripts/frames.sh` (`first`, `last`, `at`, `sheet`, `compare`, `info`) · `scripts/timeline.py` (`cuts`, `breakdown`, `trim`, `drift`) — ejecutar con `python -I`.
 
 ## Valores por defecto (sin cargar nada más)
 
 - **Modelo de video:** `seedance_2_5` en `omni_reference`. Siempre `aspect_ratio` y `resolution` explícitos; duración en segundos enteros; primera pasada con `draft: true` (480p).
 - **Identidad:** hojas de personaje como `image_references` (Elements **no** funciona con Seedance 2.5 ni con Cinema Studio 4.0). Máximo unas 9 imágenes por clip, en este orden: plate → set → personajes → props.
 - **Clips:** de 10–15 s, unos 4 beats y 6 planos, cada beat con sus segundos (`0-3 s: …`); plano mínimo de 1,5 s; la última línea de diálogo termina ≥ 4 s antes del final.
-- **Frases fijas:** `No music and no score.` y, con diálogo, la frase que fija el idioma.
+- **Marcas de tiempo por referencia:** cada referencia atada a los segundos en que actúa; cada beat con sus segundos y sus etiquetas; los videos y audios de referencia, recortados a su tramo exacto antes de subirlos.
+- **Audio por tramo:** cada tramo declara música, efectos, ambiente, diálogo o silencio. Por defecto: efectos y ambiente del modelo y música en post. Si el usuario no lo dijo, preguntar.
+- **Frases fijas:** `No music and no score.` (salvo que un tramo pida música al modelo) y, con diálogo, la frase que fija el idioma.
 - **Empalmes:** la misma toma continúa → `video_extension`; corte a otro plano → mismas referencias + frame plate. **No** fijar el último fotograma como `start_image` en una costura.
 - **Formato:** 9:16, 24 fps, lente base de 35 mm, un movimiento de cámara por plano, luz motivada descrita por su fuente en el mundo.
 - **Texto, títulos, fundidos y cámara lenta:** siempre en post.

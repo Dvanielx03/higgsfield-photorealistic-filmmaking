@@ -60,4 +60,6 @@ Excepción del workflow de escalado: en `video-edit` de Kling no se usan palabra
 | Diálogo | Frase de idioma + quién habla, las palabras entre comillas y cómo lo dice |
 | Varios personajes | Cuántos hay en cada beat |
 | Plano único sin cortes | Singular en todo el prompt; con Omni, `single continuous shot` |
+| Siempre | Cada beat con sus segundos y las etiquetas que actúan en él; momentos puntuales con `At <n> seconds,` |
+| Audio | El tipo de cada tramo (música · efectos · ambiente · diálogo · silencio) según el mapa temporal; `No music and no score.` salvo que un tramo pida música al modelo |
 | Cierre | Frase de mantenimiento: personajes, props, cielo y luz que no cambian |

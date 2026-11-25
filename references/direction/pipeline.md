@@ -4,12 +4,12 @@
 
 | # | Etapa | Cargar | Sale | Créditos | Puerta de salida |
 |---|---|---|---|---|---|
-| 0 | **Brief** | — | Objetivo, público, duración, formato (9:16 por defecto en redes), plataforma, tono, referencias, restricciones (concurso, consentimiento) | 0 | El usuario confirma el brief |
-| 1 | **Plan de planos** | `direction/shot-design.md`, `models/router.md` | `plan-de-planos.md`: cada plano con su intención, tamaño, lente, movimiento, acción, sonido, técnica y modelo; agrupado en **secciones** de segundos enteros | 0 | Las duraciones suman bien y cada plano tiene técnica |
+| 0 | **Brief** | `direction/reference-timeline.md` | Objetivo, público, duración, formato (9:16 por defecto en redes), plataforma, tono, restricciones (concurso, consentimiento), y **cada referencia de inspiración desglosada con timecode** (`timeline.py breakdown`), con su audio | 0 | El usuario confirma el brief y qué se toma de cada referencia |
+| 1 | **Plan de planos** | `direction/shot-design.md`, `models/router.md` | `plan-de-planos.md`: cada plano con su intención, tamaño, lente, movimiento, acción, técnica, modelo, **referencias activas** y **audio del tramo** (música · efectos · ambiente · diálogo · silencio); agrupado en **secciones** de segundos enteros | 0 | Las duraciones suman bien y cada plano tiene técnica |
 | 2 | **Biblia** | `direction/identity-and-assets.md`, `direction/continuity.md` | `biblia.md`: descripciones fijas en inglés, vestuario, sets y estados, props, luz por set, color, lente base, ejes, `stateIn`/`stateOut` | 0 | Cualquier prompt se puede escribir copiando bloques de la biblia |
 | 3 | **Blockout** (si alguna sección lo necesita) | `direction/blockout.md` | Video gris por sección + placas grises por set | 0 | El usuario aprueba cámara y timing |
 | 4 | **Activos** | `models/image-models.md`, `prompting/templates.md` (E, F, G) | Hojas de personaje, sets por estado, props y fotogramas clave, cada uno aprobado | bajo (imágenes) | Cada activo pasa la rúbrica y el usuario lo aprueba |
-| 5 | **Fichas de generación** | `prompting/principles.md`, la ficha del modelo | Una `prompt-card` por sección: prompt, medios, parámetros y cotización | 0 | Cotización presentada y **sí del usuario** |
+| 5 | **Fichas de generación** | `prompting/principles.md`, la ficha del modelo, `direction/reference-timeline.md` | Una `prompt-card` por sección: **mapa temporal de referencias y audio**, prompt, medios recortados a su tramo, parámetros y cotización | 0 | Cotización presentada y **sí del usuario** |
 | 6 | **Borrador** | `production/cost-protocol.md` | Seedance 2.5 `draft` a 480p (u otra prueba barata) | ≈ 3 cr/s | — |
 | 7 | **Control de calidad** | `quality/qc-rubric.md` → `quality/diagnosis.md` si falla | `qc-report.md` con la puntuación y la decisión | 0 | ≥ 14/16 y ningún 0 |
 | 8 | **Final** | ficha del modelo | Finalizar el borrador (`draft_job_id`) o regenerar en la resolución final | ≈ 7–16 cr/s | Pasa la rúbrica al ver el final |
