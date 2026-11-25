@@ -60,12 +60,13 @@ def main():
     timeline = os.path.join(a.out, "timeline.json")
     fichas = os.path.join(a.out, "fichas")
     os.makedirs(fichas, exist_ok=True)
-    for model in ("kling", "seedance"):
+    for model in ("kling", "kling-shots", "seedance"):
         sk = [sys.executable, os.path.join(HERE, "prompt_skeleton.py"), timeline, "--model", model,
               "--out", os.path.join(fichas, f"{model}.md")]
         if a.refs and model == "seedance":
             sk += ["--refs", a.refs]
-        subprocess.run(sk, check=True)
+        if subprocess.run(sk).returncode != 0:  # un modelo que no aplica (p. ej. 1 keyframe) no tumba el resto
+            print(f"Aviso: no se generó la ficha de {model}; revisa los keyframes del plan.")
     print(f"Listo → {os.path.abspath(a.out)}")
     print("Siguiente: keyframes fotorrealistas (ruta K) o referencias (ruta S), rellenar fichas, cotizar y pedir el sí.")
 

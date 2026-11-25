@@ -10,6 +10,7 @@ refs.json (opcional): referencias de producción y el tramo en que actúa cada u
 
 El esqueleto deja marcadores <…> para que la skill los rellene con la biblia. No inventa
 contenido: solo estructura tiempos, cortes, keyframes, referencias y audio por tramo.
+  kling-shots → una generación de Kling por plano (secciones con cortes), con los keyframes de cada plano.
   kling    → plano continuo guiado por keyframes (start, intermedios, end) con la sintaxis
              oficial de Kling «X–Y sec | Keyframe N:». Sin video de referencia: Kling 4.0
              no lee bien los blockouts (prueba de Thomas Lundström, oct-2026).
@@ -17,6 +18,7 @@ contenido: solo estructura tiempos, cortes, keyframes, referencias y audio por t
 """
 import argparse
 import json
+import math
 import sys
 
 AUDIO_EN = {
@@ -82,6 +84,57 @@ def kling(tl, refs):
     return L
 
 
+MIN_KF_GAP = 1.0  # production/blender-kling-seedance.md §6b: entre dos keyframes de Kling, 1–3 s
+
+
+def thin_keyframes(inside, gap=MIN_KF_GAP):
+    """Inicio y fin siempre; un intermedio solo si queda a ≥ gap s de sus vecinos. Los descartados no se suben:
+    quedan como acciones dentro del tramo (su keyframe sirve de guía visual para escribir el prompt)."""
+    if len(inside) <= 2:
+        return inside, []
+    chosen, skipped = [inside[0]], []
+    for k in inside[1:-1]:
+        (chosen if k["t"] - chosen[-1]["t"] >= gap and inside[-1]["t"] - k["t"] >= gap else skipped).append(k)
+    return chosen + [inside[-1]], skipped
+
+
+def kling_per_shot(tl, refs):
+    """Ruta K para secciones con cortes: Kling 4.0 hace tomas continuas, así que va una generación por plano.
+    Cada plano usa los keyframes que caen dentro de él (inicio = start_image, fin = end_image), aclarados a 1–3 s."""
+    kfs = tl.get("keyframes", [])
+    L = [f"# Ruta K · una generación de Kling 4.0 por plano · aspect {tl.get('aspect', '9:16')}",
+         "(Kling 4.0 no lee blockouts ni combina Keyframes con Omni Reference: la cámara y la identidad viven en los keyframes.)",
+         "(Duración mínima de Kling: 3 s. Un plano más corto se genera a 3 s y se recorta en montaje cortando en movimiento.)", ""]
+    for sh in tl["shots"]:
+        # fin exclusivo: el fotograma en t = fin ya es el primero del plano siguiente (otra cámara)
+        inside = [k for k in kfs if sh["start"] - 1e-6 <= k["t"] < sh["end"] - 1e-6]
+        dur = sh["end"] - sh["start"]
+        gen = max(3, math.ceil(dur))
+        L.append(f"## {sh['id']} · {fmt(sh['start'])}–{fmt(sh['end'])} del clip · usa {dur:.2f} s · generar {gen} s")
+        if len(inside) < 2:
+            L.append(f"FALTAN KEYFRAMES: este plano necesita al menos inicio y fin (usa auto_keyframes en el plan).")
+            L.append("")
+            continue
+        inside, beats = thin_keyframes(inside)
+        L.append(f"Media: start_image = KF{inside[0]['index']:02d}"
+                 + (" · image_references (in order) = " + ", ".join(f"KF{k['index']:02d}" for k in inside[1:-1]) if len(inside) > 2 else "")
+                 + f" · end_image = KF{inside[-1]['index']:02d}")
+        size = sh.get("size") or "<shot size>"
+        move = sh.get("move") or "<movement>"
+        if sh.get("handheld"):
+            move += ", subtle handheld"
+        L.append(f"One single continuous {gen}-second take, no cuts. {size}, {sh.get('lens_mm', 35)} mm. Camera: {move}. "
+                 "<Fixed character description from the bible>.")
+        for a, b in zip(inside, inside[1:]):
+            ta, tb = a["t"] - sh["start"], b["t"] - sh["start"]
+            mid = "".join(f" At {k['t'] - sh['start']:.2f} sec: <action shown in KF{k['index']:02d}>." for k in beats
+                          if a["t"] < k["t"] < b["t"])
+            L.append(f"{ta:.2f}–{tb:.2f} sec | Keyframe {a['index']} → Keyframe {b['index']}: "
+                     f"<action that carries frame {a['index']} into frame {b['index']}>.{mid} Sound: {audio_for(tl, a['t'], b['t'])}.")
+        L += ["No subtitles. No background music." if not wants_model_music(tl) else "No subtitles.", ""]
+    return L
+
+
 def seedance(tl, refs):
     d = tl["duration"]
     key = tl.get("blockout_key", [])
@@ -125,14 +178,14 @@ def main():
             pass
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("timeline")
-    p.add_argument("--model", choices=["kling", "seedance"], required=True)
+    p.add_argument("--model", choices=["kling", "kling-shots", "seedance"], required=True)
     p.add_argument("--refs", default=None)
     p.add_argument("--out", default=None)
     a = p.parse_args()
     with open(a.timeline, encoding="utf-8") as f:
         tl = json.load(f)
     refs = json.load(open(a.refs, encoding="utf-8")) if a.refs else []
-    lines = kling(tl, refs) if a.model == "kling" else seedance(tl, refs)
+    lines = {"kling": kling, "kling-shots": kling_per_shot, "seedance": seedance}[a.model](tl, refs)
     text = "\n".join(lines) + "\n"
     if a.out:
         with open(a.out, "w", encoding="utf-8") as f:
