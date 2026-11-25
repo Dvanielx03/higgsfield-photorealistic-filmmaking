@@ -30,6 +30,28 @@
 - **Resolución:** Higgsfield ofrece 720p y 1080p según su blog (20-10-2026), aunque el esquema del conector lista también 4K y HDR. Cotizar antes de prometer 4K.
 - **Créditos:** la tabla y las preguntas frecuentes del propio blog dan cifras distintas. Cotizar siempre.
 
+**Prueba de Thomas Lundström** ([video](https://www.youtube.com/watch?v=ECxZEbUdSlE), 23-oct-2026; mismos recursos y mismo prompt en Kling 4.0 y en Seedance 2.5):
+- **Con un blockout de Blender como referencia, Kling 4.0 no entiende la secuencia.** Seedance gana con claridad.
+- **Con keyframes, Kling mejora,** pero es menos fotorrealista («mushy AI detail»), se ciñe menos al prompt y comete más errores.
+- **En animación y texto quedan cerca;** Kling es «half decent» por su precio.
+- **Veredicto:** Kling para animación y planos sencillos; Seedance para fotorrealismo y control de cámara.
+
+Todo esto se traduce en la ruta K de `production/blender-kling-seedance.md`.
+
+**Costos verificados (9:16, 24-nov-2026):**
+- `image-to-video`: 2,5 cr/s a 720p y 3,75 cr/s a 1080p.
+- Kling 4.0 Flash: 1,5 cr/s a 720p.
+- En octubre, Thomas pagó 30 créditos por 30 s a 1080p; el precio subió.
+
+**Prompt de keyframes** (patrón de Thomas en la pestaña Frames, con la sintaxis oficial `X–Y sec | Keyframe N:`):
+```
+One single continuous 30-second take with no cuts, no transitions and no scene changes. <camera rig, grade>. <fixed character description>.
+0–5 sec | Keyframe 1 → Keyframe 2: <camera move and action that carries one frame into the next>.
+5–9 sec | Keyframe 2 → Keyframe 3: …
+No subtitles. No background music.
+```
+Medios: `start_image` = primer keyframe; `image_references` = intermedios **en orden**; `end_image` = último. Lo genera `scripts/prompt_skeleton.py --model kling`.
+
 **Cuándo:**
 - Plano único desde un fotograma aprobado, más barato que Seedance (720p i2v: **25 cr / 10 s**).
 - Animar una secuencia de fotogramas clave ordenados (`image_references` en `image-to-video`).

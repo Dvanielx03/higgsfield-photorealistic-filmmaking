@@ -67,9 +67,15 @@
   - [Kittl](https://www.kittl.com/blogs/kittl-review-seedance-2-5/): el fotograma inicial mejora la estabilidad; los briefs con muchos planos se fusionan.
   - Se usan solo como indicio, no como regla.
 
+- **Thomas Lundström, prueba de Kling 4.0 frente a Seedance 2.5:**
+  - [video](https://www.youtube.com/watch?v=ECxZEbUdSlE) (23-10-2026) y [post con todos los prompts](https://higgsfield.ai/@thomas_lundstrom/blogs/kling-4-0-vs-seedance-2-5-3-tests-every-prompt);
+  - de aquí salen la ruta K por keyframes, la regla de no usar blockout con Kling, el flujo music-first, las hojas de producto ángulo a ángulo, las referencias acotadas a su tramo y el bloque Video lock.
+
 ## 5. Pendiente de verificar con trabajos reales
 
 - Costo de finalizar un borrador de Seedance 2.5 con `draft_job_id`.
 - Calidad del lip-sync de Seedance 2.5 con `audio_references`, frente a `intone` y `sync_so`.
 - Si `hf_mult_motion_control` (Genjutsu) admite 9:16.
 - Los ids de los controles creativos de Cinema Studio 4.0.
+- Si `kling4_0` genera audio por el conector (el esquema no lo declara).
+- Cómo se referencian en el prompt de Kling, por MCP, las imágenes de `start_image` / `image_references` / `end_image` (la skill usa «Keyframe N», que es la sintaxis oficial de Kling).

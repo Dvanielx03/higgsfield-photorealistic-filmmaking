@@ -56,6 +56,9 @@ Fórmula de `production/cost-protocol.md`: `s × (3 × 2 + tarifa_final) × 1,15
 - **Las imágenes de referencia** (~0,75–3,5 cr cada una) suman unas decenas de créditos por proyecto. Si se generan en la web, donde son ilimitadas, cuestan 0.
 - Si el presupuesto supera el saldo, **se dice antes de empezar**, con dos o tres opciones para que quepa.
 
+> [!TIP]
+> **Para sacar más piezas al mes sin perder calidad donde se nota:** flujo híbrido de `production/blender-kling-seedance.md`. Una pieza de 30 s cuesta unos 450 créditos con Seedance en todos los planos, unos 280 con el híbrido 70 % Kling / 30 % Seedance y unos 200 con Kling en todos.
+
 ## Paralelismo
 
 Las secciones que **comparten técnica ya validada** pueden lanzarse juntas con `generate_video_batch`, cada una cotizada. **El primer clip de cada modelo y modo siempre va solo.**

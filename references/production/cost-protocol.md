@@ -36,7 +36,9 @@ Generar con `params: {"ref": "<quote_ref>"}` para que se ejecute **exactamente**
 | Borrador Seedance 2.5 (480p) | ≈ 3 cr/s |
 | Final Seedance 2.5 720p · Cinema Studio 4.0 720p | ≈ 7 cr/s |
 | Final Seedance 2.5 1080p | ≈ 16 cr/s |
-| i2v Kling 4.0 720p | ≈ 2,5 cr/s |
+| i2v Kling 4.0 720p (ruta K) | ≈ 2,5 cr/s |
+| i2v Kling 4.0 1080p | ≈ 3,75 cr/s |
+| Kling 4.0 Flash 720p | ≈ 1,5 cr/s |
 | Escalado fiel Kling 4.0 1080p | ≈ 4 cr/s |
 
 Nunca se sube un escalón sin haber aprobado el anterior.

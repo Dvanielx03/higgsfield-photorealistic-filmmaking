@@ -14,6 +14,9 @@
          ├─ Sí ─► ¿Hace falta luz idéntica fijada por parámetro?
          │        ├─ Sí ─► Cinema Studio 4.0 + light_custom             (cinema-studio.md)
          │        └─ No ─► SEEDANCE 2.5 omni_reference + blockout        (seedance-2-5.md)
+         │        (Kling 4.0 NO con blockout: no lo lee. Si el plano cabe en 2–10 keyframes y un
+         │         movimiento continuo → RUTA K: Kling 4.0 image-to-video por keyframes, ver
+         │         production/blender-kling-seedance.md)
          └─ No (plano único) ─► ¿Hay un fotograma clave aprobado?
                   ├─ Sí ─► ¿Diálogo con la voz real?
                   │        ├─ Sí ─► Seedance 2.5 + audio_references      (seedance-2-5.md)
@@ -30,7 +33,8 @@
 | Sección multiplano + blockout | `seedance_2_5` | 3 · 7 · 16 cr/s (480p borrador · 720p · 1080p) | Identidad con referencias, video y audio de referencia, borrador finalizable, edición y extensión | Cortes no exactos (±0,3–2,8 s) |
 | Luz fijada por parámetro | `cinematic_studio_video_4_0` | 7 cr/s (720p) | `light_custom`, modos iguales a Seedance | Ids creativos no descubribles; sin 4K; sin Elements |
 | Multiplano con un prompt por plano | `cinematic_studio_video_3_5` | 5 cr/s (720p) | `multi_prompt` con duraciones | `prompt_language` en chino por defecto; máx. 15 medios |
-| i2v desde fotograma | `kling4_0` | 2,5 cr/s (720p) | Barato; fotogramas intermedios ordenados; HDR | Audio no declarado |
+| i2v desde fotograma o **ruta K por keyframes** | `kling4_0` `image-to-video` | 2,5 cr/s (720p) · 3,75 (1080p) | Barato; hasta 10 keyframes ordenados; tomas de 3–30 s | No lee blockouts; menos fotorrealista que Seedance (prueba de Thomas); audio no declarado; sin borrador |
+| Pruebas sin keyframes | `kling_4_0_flash` | 1,5 cr/s (720p) | El más barato | Sin keyframes; solo 720p |
 | Escalado fiel con prompt | `kling4_0` `video-edit` | ≈ 4 cr/s (1080p) | Mantiene planos, diálogo y texto | Entrada ≥ 720 px; partes de ~15 s |
 | Ambiente sin personas | `gemini_omni_flash_1_2` | 2,25 cr/s (720p) | Barato, audio nativo | Corta entre planos si no se pide un plano único |
 | Prueba de concepto | `seedance_2_5_flash` | 2 cr/s (480p) | Muy barato | No finaliza como 2.5 |
