@@ -87,6 +87,33 @@ Siempre **motivada**: de dónde viene (ventana, lámpara, pantalla, sol), desde 
 
 Para que no se note la IA: **imperfección controlada** (haze, polvo, halación suave, grano fino) y **negros densos sin aplastar**.
 
+## 6a. Horizontal 16:9 cinematográfico (y publicarlo en Instagram)
+
+- **Generar en 16:9** (1920×1080): lo admiten Seedance 2.5, Cinema Studio, Kling 4.0 y Omni Flash. El blockout se construye con la misma resolución (`"resolution": [1920, 1080]` en el plan), porque el video de referencia y la generación deben compartir encuadre.
+- **Look de cine:** componer dentro de una banda **2.39:1** centrada (bandas negras en post: 1920×804 útiles dentro de 1080). Si se componen las caras y la acción dentro de esa banda, sirve igual en 16:9 sin bandas o con bandas.
+- **Instagram:** el feed acepta horizontales hasta 1.91:1, así que el 16:9 entra entero; en Reels, un 16:9 se ve con bandas. Confirmar las medidas vigentes en la ayuda de Instagram antes de entregar.
+- **En 16:9:**
+  - el plano conjunto lateral, los travellings horizontales y las órbitas lucen más que en vertical;
+  - los primeros planos dejan aire al lado hacia el que se mira (*lead room*).
+
+## 6b. Cámara dinámica sin perder fotorrealismo
+
+Cuando la pieza pide energía de cine, **todos los planos se mueven**, pero cada movimiento sigue siendo motivado y único por plano:
+
+| Momento dramático | Movimiento | Velocidad orientativa |
+|---|---|---|
+| Entrada o impacto | Push-in rápido, contrapicado, ligero tilt up | 0,3–0,5 m/s, 1–2 s |
+| Seguir a alguien que avanza | Steadicam que lo precede o lo sigue, cámara en mano sutil | Al paso de la persona |
+| Revelar lo que siente | Órbita lenta de 30–45° alrededor de la cara | 10–15° por segundo |
+| Curiosidad o tensión | Arco + push-in, subiendo levemente | Lento, continuo |
+| Liberación o final | Grúa arriba + pull-back | 0,3–0,6 m/s |
+| Diálogo a cámara | Push-in muy lento (10–20 cm en todo el plano) | Casi imperceptible |
+
+En el blockout:
+- las órbitas y los seguimientos se escriben con **claves cada 0,25–0,5 s** (ayudantes `orbit()` / `follow()` del plan);
+- la cámara en mano se activa con `"handheld"` en metros (0,004–0,012 = sutil);
+- cada plano lleva `size`, `move` y `motivation` en inglés, que pasan solos al prompt.
+
 ## 6. Vertical 9:16
 
 - Caras en el **tercio superior**; dejar libres la franja central (tipografía) y los márgenes superior e inferior (interfaz de la plataforma).

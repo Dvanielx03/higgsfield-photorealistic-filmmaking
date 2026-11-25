@@ -103,6 +103,38 @@ def key_track(obj, keys, fps, with_yaw=False):
             obj.keyframe_insert("rotation_euler", frame=f)
 
 
+def fcurves_of(obj):
+    """F-curves de un objeto, compatible con la API clásica y con las acciones por capas (Blender 4.4+/5.x)."""
+    ad = obj.animation_data
+    if not ad or not ad.action:
+        return []
+    act = ad.action
+    try:
+        return list(act.fcurves)
+    except Exception:
+        pass
+    out = []
+    for layer in getattr(act, "layers", []):
+        for strip in layer.strips:
+            for cb in getattr(strip, "channelbags", []):
+                out += list(cb.fcurves)
+    return out
+
+
+def add_handheld(cam, target, amplitude, n_keys, fps):
+    """Cámara en mano sutil: ruido en la posición de la cámara y, más fuerte, en el punto de mira."""
+    for obj, amp, seed in ((target, amplitude, 1.0), (cam, amplitude * 0.4, 7.0)):
+        if n_keys < 2:  # con una sola clave no hay F-curve animada: se crea una segunda igual
+            obj.keyframe_insert("location", frame=bpy.context.scene.frame_end)
+        for fc in fcurves_of(obj):
+            if fc.data_path != "location":
+                continue
+            mod = fc.modifiers.new("NOISE")
+            mod.scale = fps * 0.6
+            mod.strength = amp
+            mod.phase = seed + fc.array_index * 13.0
+
+
 def setup_render(scene, plan):
     w, h = plan.get("resolution", [1080, 1920])
     scene.render.engine = "BLENDER_WORKBENCH"
@@ -171,11 +203,22 @@ def build(plan):
         con.target = target
         con.track_axis = "TRACK_NEGATIVE_Z"
         con.up_axis = "UP_Y"
+        hh = float(sh.get("handheld", 0) or 0)
+        if hh > 0:
+            add_handheld(cam, target, hh, len(sh["camera"]), fps)
         m = scene.timeline_markers.new(sh["id"], frame=frame(sh["start"], fps))
         m.camera = cam
         cams[sh["id"]] = cam
     scene.camera = cams[plan["shots"][0]["id"]]
     return scene, cams, hideable, key_colors
+
+
+def aspect_of(res):
+    w, h = res
+    for name, r in (("16:9", 16 / 9), ("9:16", 9 / 16), ("1:1", 1.0), ("4:5", 0.8), ("21:9", 21 / 9), ("4:3", 4 / 3)):
+        if abs(w / h - r) < 0.02:
+            return name
+    return f"{w}:{h}"
 
 
 def shot_at(plan, t):
@@ -247,7 +290,10 @@ def main():
         "duration": plan["duration"],
         "resolution": plan.get("resolution"),
         "cuts": [sh["start"] for sh in plan["shots"][1:]],
-        "shots": [{"id": sh["id"], "start": sh["start"], "end": sh["end"], "lens_mm": sh.get("lens_mm", 35)}
+        "aspect": aspect_of(plan.get("resolution", [1080, 1920])),
+        "shots": [{"id": sh["id"], "start": sh["start"], "end": sh["end"], "lens_mm": sh.get("lens_mm", 35),
+                   "size": sh.get("size"), "move": sh.get("move"), "motivation": sh.get("motivation"),
+                   "handheld": sh.get("handheld", 0)}
                   for sh in plan["shots"]],
         "keyframes": keyframes_out,
         "blockout_key": key_colors,

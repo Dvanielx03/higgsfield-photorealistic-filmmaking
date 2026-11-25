@@ -73,7 +73,10 @@ Scripts:
 - **Audio por tramo:** cada tramo declara música, efectos, ambiente, diálogo o silencio. Por defecto: efectos y ambiente del modelo y música en post. Si el usuario no lo dijo, preguntar.
 - **Frases fijas:** `No music and no score.` (salvo que un tramo pida música al modelo) y, con diálogo, la frase que fija el idioma.
 - **Empalmes:** la misma toma continúa → `video_extension`; corte a otro plano → mismas referencias + frame plate. **No** fijar el último fotograma como `start_image` en una costura.
-- **Formato:** 9:16, 24 fps, lente base de 35 mm, un movimiento de cámara por plano, luz motivada descrita por su fuente en el mundo.
+- **Formato según destino:**
+  - 16:9 para cine o para el feed (con banda 2.39:1 en post si se quiere look de cine);
+  - 9:16 para reels.
+  - Siempre 24 fps, lente base de 35 mm, **un movimiento de cámara motivado por plano** (cámara dinámica: ver `direction/shot-design.md` §6b) y luz motivada descrita por su fuente en el mundo.
 - **Texto, títulos, fundidos y cámara lenta:** siempre en post.
 
 ## Skills y workflows oficiales que se usan, no se duplican

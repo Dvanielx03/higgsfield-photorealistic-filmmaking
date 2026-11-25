@@ -66,13 +66,13 @@ def kling(tl, refs):
     if len(kfs) < 2:
         sys.exit("Kling necesita al menos 2 keyframes (inicio y fin) en el timeline.")
     d = tl["duration"]
-    L = [f"Model: kling4_0 · mode: image-to-video · duration: {round(d)} s · aspect 9:16",
+    L = [f"Model: kling4_0 · mode: image-to-video · duration: {round(d)} s · aspect {tl.get('aspect', '9:16')}",
          f"Media: start_image = KF01 · image_references (in order) = "
          + ", ".join(f"KF{k['index']:02d}" for k in kfs[1:-1]) + f" · end_image = KF{kfs[-1]['index']:02d}",
          "(Kling 4.0 does not combine Keyframes with Omni Reference: no reference video, no extra reference images.)",
          "",
          f"One single continuous {round(d)}-second take with no cuts, no transitions and no scene changes. "
-         "<Camera behaviour: rig, speed, grade>. <Fixed character description from the bible>.",
+         + ("Camera: " + "; then ".join(f"{sh['move']}" for sh in tl['shots'] if sh.get('move')) + ". " if any(sh.get('move') for sh in tl['shots']) else "<Camera behaviour: rig, speed, grade>. ") + "<Fixed character description from the bible>.",
          audio_line(tl), ""]
     for a, b in zip(kfs, kfs[1:]):
         L.append(f"{a['t']:.2f}–{b['t']:.2f} sec | Keyframe {a['index']} → Keyframe {b['index']}: "
@@ -85,7 +85,7 @@ def kling(tl, refs):
 def seedance(tl, refs):
     d = tl["duration"]
     key = tl.get("blockout_key", [])
-    L = [f"Model: seedance_2_5 · mode: omni_reference · duration: {round(d)} s · aspect 9:16 · draft: true",
+    L = [f"Model: seedance_2_5 · mode: omni_reference · duration: {round(d)} s · aspect {tl.get('aspect', '9:16')} · draft: true",
          "Media order: image_references (plate → set → characters → props) → video_references (blockout) → audio_references",
          "",
          "Style: Photorealistic live-action, shot like a feature film. NOT 3D-render, no game engine.",
@@ -106,7 +106,11 @@ def seedance(tl, refs):
     L += ["", f"There are exactly {n} shots (CUT 1 to CUT {n}), in this order, each cutting where @Video 1 cuts. "
               "Never add or drop a shot.", ""]
     for i, sh in enumerate(tl["shots"], 1):
-        L.append(f"CUT {i} ({fmt(sh['start'])}–{fmt(sh['end'])}) — <shot size>, {sh.get('lens_mm', 35)} mm, <movement>: "
+        size = sh.get("size") or "<shot size>"
+        move = sh.get("move") or "<movement>"
+        if sh.get("handheld"):
+            move += ", subtle handheld"
+        L.append(f"CUT {i} ({fmt(sh['start'])}–{fmt(sh['end'])}) — {size}, {sh.get('lens_mm', 35)} mm, {move}: "
                  f"<how many people in frame>. <one concrete action>. <face>. "
                  f"Sound: {audio_for(tl, sh['start'], sh['end'])}.")
     L += ["", "Hold: <characters, props, sky and light that stay the same throughout>."]
