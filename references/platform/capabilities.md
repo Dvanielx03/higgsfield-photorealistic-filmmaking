@@ -68,7 +68,7 @@ No se reimplementan: se cargan con `get_workflow_instructions` y se siguen. Esta
 
 ## Plataforma, regiones y canales
 
-- **Lo ilimitado del plan solo funciona en la web.** Por MCP, CLI, Canvas o Supercomputer todo gasta créditos (ver `plan-and-credits.md`).
+- **Lo ilimitado del plan no funciona desde Claude Code.** El conector rechaza `use_unlim: true` (sin cobrar) y dice que está disponible en Claude chat, Claude Cowork y ChatGPT; el centro de ayuda añade la web. Si el usuario solo autoriza ilimitados, la skill prepara los prompts y él genera allí (ver `plan-and-credits.md`).
 - **Seedance 2.5 Flash y el 4K de Seedance 2.5:** «no disponibles en EE. UU.» según el changelog. Si el conector los ofrece, cotizar y comprobar.
 - **Draft Mode** de Seedance: el detalle fino no está documentado en el centro de ayuda; el esquema del conector sí lo declara (`draft`, `draft_job_id`).
 - **Cinema Studio 3.5** tiene un Director IA con Claude dentro de la web. Esta skill no lo usa: trabaja con el conector.

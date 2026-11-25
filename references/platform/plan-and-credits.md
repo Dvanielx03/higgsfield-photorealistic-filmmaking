@@ -19,6 +19,7 @@
 
 > [!IMPORTANT]
 > **Lo «ilimitado» funciona solo en la interfaz web.** Lo que se genera por **MCP, CLI, Canvas o Supercomputer siempre gasta créditos**, aunque el plan lo tenga como ilimitado. Esta skill trabaja por MCP o CLI, así que **todo lo que genera cuesta créditos**.
+> **Verificado el 24-nov-2026 desde Claude Code:** una petición con `use_unlim: true` se rechaza **sin cobrar** con el mensaje «Estás usando Higgsfield desde Claude Code, donde las generaciones ilimitadas no están disponibles. Están disponibles en: Claude chat, Claude Cowork, ChatGPT». Desde Claude Code, entonces, toda generación cuesta créditos.
 > Consecuencia práctica: si el usuario quiere aprovechar las imágenes ilimitadas, puede generar las imágenes de referencia **él mismo en la web** con los prompts que prepara la skill y pasarle el archivo o el job id. Ofrecerlo siempre que el presupuesto apriete.
 
 ## Comprobar la cuenta
