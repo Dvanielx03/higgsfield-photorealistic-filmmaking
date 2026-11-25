@@ -51,8 +51,13 @@ Por cada clip, antes de cotizar, una tabla en la `prompt-card`:
 3. **Voz (`@Audio`)**: una muestra original de 3–10 s de la persona (regla de `drama-ads`). Su tramo de origen se anota.
 4. **En el prompt, cada beat empieza con sus segundos y nombra las etiquetas que actúan en él:** `3-6 s: @Image3 pushes the door open…`. Las referencias que valen para todo el clip (set, identidad) se declaran una vez arriba y se repiten en los beats donde importan.
 5. **Momentos puntuales** con `At <n> seconds,` (guía oficial de Seedance): un golpe, la entrada de una línea, un corte.
-6. **Tolerancia:** los cortes de Seedance se desvían (la mitad ±0,33 s y uno de cada tres 0,5–2,8 s). Planificar con **margen de 0,8 s**, planos de al menos 1,5 s, y la última línea de diálogo terminada **4 s antes del final** del clip.
-7. **Renumeración:** si se añade o quita una imagen, cambian `@Image2…N`. Actualizar el mapa y el prompt a la vez.
+6. **Acotar qué aporta cada referencia y en qué tramo**, a la manera de los prompts publicados por Thomas Lundström:
+   - `@Kitchen — the kitchen for 0:25.67–0:30.00 only.`
+   - `@tstr — appearance of the car ONLY. … Do NOT reproduce its grey background.`
+   - `@Video 1 · 30s — camera movement, cuts, speed ramps and timing ONLY, 1:1 frame-aligned.`
+   El esqueleto lo genera `scripts/prompt_skeleton.py`.
+7. **Tolerancia:** los cortes de Seedance se desvían (la mitad ±0,33 s y uno de cada tres 0,5–2,8 s). Planificar con **margen de 0,8 s**, planos de al menos 1,5 s, y la última línea de diálogo terminada **4 s antes del final** del clip.
+8. **Renumeración:** si se añade o quita una imagen, cambian `@Image2…N`. Actualizar el mapa y el prompt a la vez.
 
 ## 3. Especificación de audio por tramo
 

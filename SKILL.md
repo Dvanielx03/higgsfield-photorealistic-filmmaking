@@ -42,6 +42,7 @@ No cargues todo. Carga **solo** el módulo de la etapa en curso.
 | Secciones con cámara compleja | `references/direction/blockout.md` |
 | **Referencias con marcas de tiempo y audio por tramo** (siempre que haya referencias o audio) | `references/direction/reference-timeline.md` |
 | Escribir un prompt | `references/prompting/principles.md` + la plantilla que toque de `prompting/templates.md` |
+| **Presupuesto ajustado, más videos por mes, Kling 4.0 frente a Seedance 2.5, blockout automático** | `references/production/blender-kling-seedance.md` |
 | Antes de cualquier gasto | `references/production/cost-protocol.md` |
 | Revisar una generación | `references/quality/qc-rubric.md` |
 | Una generación falla | `references/quality/diagnosis.md` |
@@ -50,11 +51,22 @@ No cargues todo. Carga **solo** el módulo de la etapa en curso.
 
 Plantillas del proyecto en `templates/`: `biblia.md`, `plan-de-planos.md`, `prompt-card.md`, `qc-report.md`, `presupuesto.md`.
 Plantillas extra: `referencias.md` (desglose con timecode y audio por tramo).
-Scripts: `scripts/frames.sh` (`first`, `last`, `at`, `sheet`, `compare`, `info`) · `scripts/timeline.py` (`cuts`, `breakdown`, `trim`, `drift`) — ejecutar con `python -I`.
+Scripts:
+- `scripts/frames.sh` (`first`, `last`, `at`, `sheet`, `compare`, `info`)
+- `scripts/timeline.py` (`cuts`, `breakdown`, `trim`, `drift`)
+- `scripts/beats.py` (música → cortes a ritmo)
+- `scripts/run_blockout.py` (**un comando**: plan.json → blockout de Blender sin interfaz → video, keyframes, plates, timeline y fichas de Kling y Seedance)
+- `scripts/blockout/build_blockout.py` (el constructor de Blender que usa el anterior)
+- `scripts/prompt_skeleton.py` (timeline → prompt de Kling o de Seedance con tiempos)
 
 ## Valores por defecto (sin cargar nada más)
 
-- **Modelo de video:** `seedance_2_5` en `omni_reference`. Siempre `aspect_ratio` y `resolution` explícitos; duración en segundos enteros; primera pasada con `draft: true` (480p).
+- **Dos rutas por plano:**
+  - **K** = Kling 4.0 `image-to-video` con keyframes fotorrealistas, para planos sencillos, producto, B-roll y animación (2,5 cr/s a 720p);
+  - **S** = Seedance 2.5 con blockout, para planos héroe, caras, diálogo y cámara compleja.
+  - Kling **nunca** con un blockout como video de referencia: no lo lee (prueba de Thomas Lundström).
+  - Un plano K que falla en fotorrealismo, identidad o física pasa a S con los mismos keyframes.
+- **Modelo de video en la ruta S:** `seedance_2_5` en `omni_reference`. Siempre `aspect_ratio` y `resolution` explícitos; duración en segundos enteros; primera pasada con `draft: true` (480p).
 - **Identidad:** hojas de personaje como `image_references` (Elements **no** funciona con Seedance 2.5 ni con Cinema Studio 4.0). Máximo unas 9 imágenes por clip, en este orden: plate → set → personajes → props.
 - **Clips:** de 10–15 s, unos 4 beats y 6 planos, cada beat con sus segundos (`0-3 s: …`); plano mínimo de 1,5 s; la última línea de diálogo termina ≥ 4 s antes del final.
 - **Marcas de tiempo por referencia:** cada referencia atada a los segundos en que actúa; cada beat con sus segundos y sus etiquetas; los videos y audios de referencia, recortados a su tramo exacto antes de subirlos.

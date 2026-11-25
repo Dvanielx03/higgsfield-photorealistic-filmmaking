@@ -15,7 +15,21 @@ Es el paso que más créditos ahorra. Se ve el video completo, con cámaras, len
 | Varios personajes que se cruzan o interactúan | Inserto de un objeto |
 | Timing exacto que debe casar con música o tipografía | Plano que solo necesita parallax en post |
 
-## Procedimiento (con el MCP oficial de Blender)
+## Procedimiento automático (recomendado)
+
+```bash
+python scripts/beats.py musica.mp3 --cuts 12 --json cortes.json        # opcional: cortes a ritmo
+"<ruta>/blender.exe" -b -P scripts/blockout/build_blockout.py -- plan.json blockout/
+```
+
+- `plan.json` (formato en `scripts/blockout/plan.example.json`) describe set, personas, props, planos con lente y cámara, keyframes y audio por tramo.
+- El script construye la escena sin abrir Blender y genera `blockout.blend`, `blockout.mp4` (24 fps), `keyframes/`, `plates/` y `timeline.json`.
+- Un plan de 8 s tarda unos 50 s.
+- **Iterar** = editar el plan y repetir, o tocar el `.blend` con el MCP de Blender. Cuenta con varias versiones antes de fijar el blockout.
+- **Music-first** (Thomas): elegir la música antes del blockout y poner los cortes sobre sus golpes. La previz nace a ritmo.
+- **Salidas por ruta:** el video alimenta la ruta S (Seedance); los keyframes, la ruta K (Kling). Ver `production/blender-kling-seedance.md`.
+
+## Procedimiento manual (con el MCP oficial de Blender)
 
 1. **Comprobar la conexión** con el MCP de Blender antes de prometer nada. Si no hay conexión, ofrecer el plan B: fotogramas clave aprobados como `start_image`.
 2. **Una ronda de preguntas, con valores por defecto**, antes de construir: estilo, estructura (un plano o varios cortes), duración, formato, sensación de cámara, lentes, profundidad de campo y lugar. Saltarse esta ronda fue el error número uno del autor del método.
