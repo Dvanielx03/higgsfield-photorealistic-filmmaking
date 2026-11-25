@@ -41,6 +41,9 @@
 | Color distinto entre clips (4) | Clips de modelos o semillas distintos | `grade-hf` o `/color-grade`; etalonaje común en post | 2 |
 | Texto o logotipos inventados (descalificante) | Superficies con «letreros» o marcas en el prompt | `plain unbranded`; texto en post | 4 |
 | Música no pedida (descalificante) | Faltaba la frase | `No music and no score.`; silenciar en post | 1 |
+| El audio de un tramo no es el pedido (música, efectos, diálogo o silencio) | El tramo no tenía el audio escrito en su beat, o se mezcló música y diálogo en el modelo | Escribir el audio en cada beat según el mapa temporal; la música, en post | 1 (post) o 4 |
+| Una referencia actúa en el tramo equivocado | Beats sin etiquetas, o un video de referencia sin recortar | Etiquetas en cada beat; recortar con `timeline.py trim` | 3–4 |
+| Corte o evento fuera de su marca (> 0,8 s) | Desviación propia de Seedance; planos demasiado cortos | Márgenes y planos ≥ 1,5 s; recortar en montaje; `At <n> seconds,` para el evento | 1 o 5 |
 | Diálogo en otro idioma | Faltaba la frase de idioma | `Every spoken line is in <language>, exactly the words in quotes…` | 4 |
 | Voz que cambia entre clips | Muestra de voz recortada de un clip generado | Muestra original de 3–10 s de la persona real, siempre la misma | 3 |
 | Labios desincronizados | Diálogo demasiado cerca del final o línea larga | La última línea termina ≥ 4 s antes del final; `sync_so` como arreglo | 2–4 |

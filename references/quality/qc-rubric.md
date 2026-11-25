@@ -9,8 +9,10 @@
 2. **Comparación lado a lado** del fotograma más revelador contra su referencia:
    `bash scripts/frames.sh compare clip.mp4 2.5 ref.png clip_vs_ref.png`
 3. **Primer y último fotograma** si la toma empalma con otra (`frames.sh first|last`).
-4. **Reproducción a velocidad real**, dos veces: una mirando caras y manos y otra mirando fondo y física.
-5. Anotar la puntuación en `templates/qc-report.md` del proyecto.
+4. **Marcas de tiempo:** `python -I scripts/timeline.py drift clip.mp4 <cortes planeados>` y `frames.sh at` en cada momento del mapa temporal. Comprobar que cada referencia actuó en su tramo.
+5. **Audio por tramo:** escuchar cada tramo contra el mapa (música · efectos · ambiente · diálogo · silencio).
+6. **Reproducción a velocidad real**, dos veces: una mirando caras y manos y otra mirando fondo y física.
+7. Anotar la puntuación en `templates/qc-report.md` del proyecto.
 
 ## Los 8 criterios (0 · 1 · 2)
 
@@ -27,7 +29,8 @@
 
 Además, **descalificantes automáticos** (equivalen a 0 en el criterio afectado):
 - texto ilegible, logotipos o marcas inventadas en imagen;
-- música no pedida en el audio;
+- música no pedida en el audio, o un tramo cuyo audio no coincide con el mapa temporal (suena donde debía haber silencio, falta el diálogo);
+- un corte o un evento desviado más de 0,8 s de su marca cuando el plano depende de ella (sincronía con música o con tipografía);
 - fotograma final inutilizable para un relevo previsto.
 
 ## Decisión
