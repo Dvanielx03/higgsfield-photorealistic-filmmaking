@@ -40,23 +40,22 @@ Generar video con IA suele parecer una tragamonedas: se regenera hasta que algo 
 
 ```mermaid
 flowchart LR
-    A[Brief] --> B[Plan de planos]
-    B --> C[Biblia]
-    C --> D[Blockout]
-    D --> E[Activos en imagen]
-    E --> F[Ficha + cotización]
-    F --> G{Sí del usuario}
-    G --> H[Borrador 480p]
+    A[1 · Guion<br/>y formato] --> B[2 · Storyboard<br/>y dirección]
+    B --> C[3 · Sets y<br/>referencias]
+    C --> D[4 · Animatic<br/>en Blender]
+    D --> G{Animatic<br/>aprobado}
+    G --> F[Ficha + cotización]
+    F --> Y{Sí del usuario}
+    Y --> H[5 · Generación]
     H --> I{Rúbrica 8 criterios}
     I -->|falla| J[Diagnóstico:<br/>corrección más barata]
     J --> H
-    I -->|pasa| K[Final]
-    K --> L[Acabado en Higgsfield<br/>y post]
+    I -->|pasa| L[6 · Post y control<br/>de calidad]
 
     classDef free fill:#1C1E21,stroke:#383E46,color:#F7F7F8
     classDef paid fill:#0F1113,stroke:#D1FE17,color:#D1FE17
-    class A,B,C,D,F,G,I,J free
-    class E,H,K,L paid
+    class A,B,C,D,G,F,Y,I,J free
+    class H,L paid
 ```
 
 <sub>Gris: 0 créditos · lima: consume créditos</sub>
@@ -89,7 +88,7 @@ flowchart LR
 
 Kling 4.0 **no** se usa con el blockout como video de referencia, porque no lo lee; se usa con keyframes. Así lo mostró la [prueba pública de Thomas Lundström](https://www.youtube.com/watch?v=ECxZEbUdSlE). Detalle en [`references/production/blender-kling-seedance.md`](references/production/blender-kling-seedance.md).
 
-Cada etapa tiene una puerta de salida (`references/direction/pipeline.md`). El usuario aprueba en tres puntos: brief, blockout más activos, y cada gasto de video.
+Cada una de las seis etapas tiene objetivos, requisitos, errores aprendidos en producción y una puerta de aprobación (`references/stages/`). El usuario aprueba en cuatro puntos: guion y formato, animatic, cada gasto de video y la pieza final. **Sin animatic aprobado no se genera video.**
 
 ## Instalación
 
@@ -145,6 +144,13 @@ Este plano está bien, pero la luz cambia respecto al anterior. ¿Cómo lo arreg
 higgsfield-photorealistic-filmmaking/
 ├── SKILL.md                         Rol, innegociables, ciclo, mapa de módulos, valores por defecto
 ├── references/
+│   ├── stages/                      Las 6 etapas: objetivo, requisitos, errores y puerta de cada una
+│   │   ├── 01-creative-script.md    Guion, formato y destino
+│   │   ├── 02-storyboard-direction.md  Planos, variedad, movimiento motivado, acciones secundarias
+│   │   ├── 03-sets-references.md    Sets en capas, luz con fuente, activos
+│   │   ├── 04-animatic-blender.md   Animatic completo y revisión obligatoria
+│   │   ├── 05-ai-generation.md      Kling por plano, Seedance por sección, cotizar y pedir el sí
+│   │   └── 06-post-qc.md            Montaje, color entre modelos, sonido, entrega
 │   ├── platform/
 │   │   ├── capabilities.md          Qué existe y qué no; herramientas del conector; workflows oficiales
 │   │   ├── plan-and-credits.md      Plan Plus, créditos, ilimitados (solo web), cuánto video da

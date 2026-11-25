@@ -184,6 +184,26 @@ Re-cotizar antes de presupuestar.
 - **No hay modo borrador:** la prueba barata es la propia pasada a 720p.
 - **Texto en pantalla:** Kling lo estropea (prueba 3 de Thomas). El texto va en post.
 
+## 6b. Producción solo con Kling 4.0: qué se conserva y qué cambia respecto a Seedance
+
+Cuando una producción decide usar **Kling 4.0 en todas las escenas** (por presupuesto), el flujo de Seedance se conserva casi entero; solo cambia cómo se le entregan al modelo la cámara, la identidad y el tiempo.
+
+| Aspecto | En Seedance 2.5 (ruta S) | En Kling 4.0 (ruta K) | Qué hacer |
+|---|---|---|---|
+| **Cámara** | El blockout es la «SOLE authority» como `video_references` | No lee blockouts | Keyframes renderizados del blockout en cada **inicio, centro y fin de plano** y en cada cambio de movimiento (`auto_keyframes: true`); el movimiento, escrito entre keyframes |
+| **Cortes** | Una sección multiplano por generación | Toma continua por generación | **Una generación por plano** (`prompt_skeleton.py --model kling-shots`); los cortes se hacen en montaje |
+| **Duración** | 4–30 s, cortes con desvío medido | 3–30 s | Planos de menos de 3 s se generan a 3 s y se recortan cortando en movimiento |
+| **Identidad** | Hojas como `image_references` | Keyframes y Omni Reference no se combinan | La identidad vive **dentro de los keyframes fotorrealistas**: se hacen con la hoja de personaje y encadenando el keyframe anterior aprobado |
+| **Referencias con marcas de tiempo** | `@ref — … for t1–t2 only` | Sin referencias extra | El mapa temporal se traduce a **segmentos entre keyframes** (`a–b sec \| Keyframe N → N+1`) |
+| **Continuidad entre planos** | Mismas referencias + frame plate | Sin referencias | Keyframes de planos vecinos hechos a partir del mismo set maestro y de la misma hoja; luz descrita por su fuente en el mundo en todos |
+| **Audio y diálogo** | Audio nativo y voz por `audio_references` | Audio no declarado en el conector | Todo el sonido en post; los planos con diálogo se generan sin voz y se sincronizan con `sync_so` usando la voz real (cotizar) |
+| **Prueba barata** | Borrador 480p finalizable | Sin borrador | Primera pasada a 720p (2,5 cr/s), que ya sirve de final si pasa la rúbrica |
+| **Calidad esperada** | Referente en fotorrealismo | Menos fotorrealista con personas (prueba de Thomas) | Keyframes de calidad cinematográfica, acciones a velocidad humana, primeros planos cortos; la rúbrica decide |
+
+**Densidad de keyframes por plano:** inicio y fin siempre; uno más por cada cambio de dirección de la cámara o por cada acción importante; como máximo 10 por generación. Entre dos keyframes, 1–3 s.
+- El constructor ya no añade el centro de un plano si hay otro keyframe a menos de 0,3 s, y descarta los explícitos pegados al inicio o al fin.
+- `prompt_skeleton.py --model kling-shots` sube solo los que quedan a ≥ 1 s entre sí. Los demás se escriben como acciones dentro del tramo (`At 1.40 sec: …`), usando su keyframe como guía para redactar.
+
 ## 7. Alternativas oficiales para manejar Blender
 
 - [Plugin Higgsfield for Blender](https://higgsfield.ai/plugins/blender): genera desde Blender.

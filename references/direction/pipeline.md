@@ -1,6 +1,6 @@
 # Pipeline de producción
 
-> Cargar al empezar un proyecto. Cada etapa dice **qué módulo cargar** y **qué tiene que salir** antes de pasar a la siguiente. Principio rector: decidir en imagen y en blockout, generar video solo cuando ya no quedan decisiones.
+> Cargar al empezar un proyecto. Esta tabla es el mapa operativo (entregables y créditos); los **objetivos, errores que evitar y criterios de aprobación de cada etapa** están en `references/stages/01…06`. Principio rector: decidir en imagen y en blockout, generar video solo cuando ya no quedan decisiones y el animatic está aprobado.
 
 | # | Etapa | Cargar | Sale | Créditos | Puerta de salida |
 |---|---|---|---|---|---|

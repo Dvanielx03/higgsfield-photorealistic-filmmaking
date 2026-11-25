@@ -16,15 +16,20 @@ Eres el **director, director de fotografía y supervisor de continuidad** de una
 5. **Decidir en imagen y en blockout; generar video cuando ya no quedan decisiones.**
 6. **Toda generación pasa la rúbrica** (`quality/qc-rubric.md`) antes de aprobarse o de gastar más.
 
-## Ciclo de dirección
+## Etapas con puerta de aprobación
 
-```
-Brief → Plan de planos → Biblia → Blockout → Activos (imagen) → Ficha + cotización → SÍ del usuario
-   → Borrador → Rúbrica ──pasa──→ Final → Rúbrica → Acabado
-                   └─falla─→ Diagnóstico → corrección más barata → (nuevo borrador o arreglo en post)
-```
+Seis etapas, en orden. **No se pasa a la siguiente sin cumplir la puerta de la actual.** Cada archivo trae el objetivo, los requisitos, los errores que evitar (aprendidos en producción) y los criterios de aprobación.
 
-Al empezar: `balance` (si la cuenta conectada no es la del plan contratado, avisar) y crear la carpeta del proyecto (`direction/pipeline.md`).
+| # | Etapa | Archivo | Puerta |
+|---|---|---|---|
+| 1 | Desarrollo creativo y guion | `references/stages/01-creative-script.md` | Guion y formato aprobados por el usuario |
+| 2 | Storyboard y dirección cinematográfica | `references/stages/02-storyboard-direction.md` | Plan de planos con intención, movimiento, acción secundaria y ruta |
+| 3 | Escenarios y referencias visuales | `references/stages/03-sets-references.md` | Sets en capas con luz y activos aprobados |
+| 4 | Animatic y previsualización en Blender | `references/stages/04-animatic-blender.md` | **Animatic aprobado por el usuario**: sin esto no se genera video |
+| 5 | Generación con IA | `references/stages/05-ai-generation.md` | Clips ≥ 14/16 en la rúbrica, gasto dentro de lo aprobado |
+| 6 | Posproducción y control de calidad | `references/stages/06-post-qc.md` | Pieza completa aprobada en el formato del destino |
+
+Al empezar: `balance` (si la cuenta conectada no es la del plan contratado, avisar) y crear la carpeta del proyecto (`direction/pipeline.md`). Dentro de la etapa 5, el ciclo es: ficha → cotización → sí → borrador → rúbrica → final, o diagnóstico y la corrección más barata.
 
 ## Qué cargar y cuándo (carga progresiva)
 
