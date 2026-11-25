@@ -1,67 +1,456 @@
 {
   "name": "ejemplo-entrada",
   "fps": 24,
-  "resolution": [1920, 1080],
+  "resolution": [
+    1920,
+    1080
+  ],
   "preview_scale": 0.6667,
-  "engine": "EEVEE",
+  "engine": "WORKBENCH",
   "duration": 6,
   "music": null,
   "auto_keyframes": true,
   "set": {
     "id": "oficina",
-    "color": [0.55, 0.55, 0.56],
+    "color": [
+      0.55,
+      0.55,
+      0.56
+    ],
     "boxes": [
-      {"name": "suelo", "size": [8, 8, 0.1], "location": [0, 0.5, -0.05], "color": [0.32, 0.3, 0.29]},
-      {"name": "fondo_izq", "size": [0.5, 0.2, 3.0], "location": [-3.75, 4.0, 1.5]},
-      {"name": "fondo_der", "size": [6.5, 0.2, 3.0], "location": [0.75, 4.0, 1.5]},
-      {"name": "dintel", "size": [1.0, 0.2, 0.9], "location": [-3.0, 4.0, 2.55]},
-      {"name": "pasillo", "size": [3.0, 0.2, 3.0], "location": [-3.0, 6.0, 1.5], "color": [0.5, 0.42, 0.35]},
-      {"name": "mesa", "size": [2.4, 1.2, 0.04], "location": [0, 1.0, 0.75], "color": [0.42, 0.4, 0.38]},
-      {"name": "pedestal", "size": [0.3, 0.6, 0.73], "location": [0, 1.0, 0.365], "color": [0.25, 0.25, 0.27]},
-      {"name": "portatil_pantalla", "size": [0.33, 0.015, 0.22], "location": [0.6, 0.75, 0.9], "color": [0.75, 0.85, 1.0], "emission": 2.5},
-      {"name": "planta_1t", "shape": "sphere", "size": [0.7, 0.7, 0.9], "location": [1.9, -2.6, 0.8], "color": [0.12, 0.3, 0.12]},
-      {"name": "lampara", "shape": "cone", "size": [0.45, 0.45, 0.25], "location": [0, 1.0, 1.95], "color": [0.15, 0.15, 0.15]}
+      {
+        "name": "suelo",
+        "size": [
+          8,
+          8,
+          0.1
+        ],
+        "location": [
+          0,
+          0.5,
+          -0.05
+        ],
+        "color": [
+          0.32,
+          0.3,
+          0.29
+        ]
+      },
+      {
+        "name": "fondo_izq",
+        "size": [
+          0.5,
+          0.2,
+          3.0
+        ],
+        "location": [
+          -3.75,
+          4.0,
+          1.5
+        ]
+      },
+      {
+        "name": "fondo_der",
+        "size": [
+          6.5,
+          0.2,
+          3.0
+        ],
+        "location": [
+          0.75,
+          4.0,
+          1.5
+        ]
+      },
+      {
+        "name": "dintel",
+        "size": [
+          1.0,
+          0.2,
+          0.9
+        ],
+        "location": [
+          -3.0,
+          4.0,
+          2.55
+        ]
+      },
+      {
+        "name": "pasillo",
+        "size": [
+          3.0,
+          0.2,
+          3.0
+        ],
+        "location": [
+          -3.0,
+          6.0,
+          1.5
+        ],
+        "color": [
+          0.5,
+          0.42,
+          0.35
+        ]
+      },
+      {
+        "name": "mesa",
+        "size": [
+          2.4,
+          1.2,
+          0.04
+        ],
+        "location": [
+          0,
+          1.0,
+          0.75
+        ],
+        "color": [
+          0.42,
+          0.4,
+          0.38
+        ]
+      },
+      {
+        "name": "pedestal",
+        "size": [
+          0.3,
+          0.6,
+          0.73
+        ],
+        "location": [
+          0,
+          1.0,
+          0.365
+        ],
+        "color": [
+          0.25,
+          0.25,
+          0.27
+        ]
+      },
+      {
+        "name": "portatil_pantalla",
+        "size": [
+          0.33,
+          0.015,
+          0.22
+        ],
+        "location": [
+          0.6,
+          0.75,
+          0.9
+        ],
+        "color": [
+          0.75,
+          0.85,
+          1.0
+        ]
+      },
+      {
+        "name": "planta_1t",
+        "shape": "sphere",
+        "size": [
+          0.7,
+          0.7,
+          0.9
+        ],
+        "location": [
+          1.9,
+          -2.6,
+          0.8
+        ],
+        "color": [
+          0.12,
+          0.3,
+          0.12
+        ]
+      },
+      {
+        "name": "lampara",
+        "shape": "cone",
+        "size": [
+          0.45,
+          0.45,
+          0.25
+        ],
+        "location": [
+          0,
+          1.0,
+          1.95
+        ],
+        "color": [
+          0.15,
+          0.15,
+          0.15
+        ]
+      }
     ]
   },
-  "lights": [
-    {"type": "SPOT", "location": [0, 1.0, 1.82], "look_at": [0, 1.0, 0], "energy": 220, "color": [1.0, 0.72, 0.45], "spot_deg": 75},
-    {"type": "AREA", "location": [-3.0, 5.4, 1.6], "look_at": [-3.0, 2.0, 1.2], "energy": 40, "color": [1.0, 0.5, 0.15], "size": 1.4,
-     "keys": [{"t": 0.3, "energy": 40}, {"t": 0.6, "energy": 1600}]}
-  ],
   "subjects": [
-    {"id": "A", "label": "Persona A", "color": [0.8, 0.1, 0.1], "height": 1.78,
-     "keys": [{"t": 0.0, "pos": [-3.0, 4.4, 0], "yaw": 0},
-              {"t": 3.0, "pos": [-1.4, 0.6, 0], "yaw": 20},
-              {"t": 3.6, "pos": [-0.9, -0.2, 0], "yaw": 0, "head_yaw": 0},
-              {"t": 6.0, "pos": [-0.9, -0.2, 0], "yaw": 0, "head_yaw": 25}],
-     "hand_keys": [{"t": 0, "pos": [0.25, -0.05, 0.95]}, {"t": 4.5, "pos": [0.3, -0.45, 1.4]}]},
-    {"id": "F1", "label": "figurante sentado", "color": [0.5, 0.2, 0.75], "height": 1.28,
-     "keys": [{"t": 0, "pos": [0.8, 0.1, 0], "yaw": 180, "head_pitch": 28}, {"t": 4.8, "pos": [0.8, 0.1, 0], "yaw": 180, "head_pitch": -5}]}
+    {
+      "id": "A",
+      "label": "Persona A",
+      "color": [
+        0.8,
+        0.1,
+        0.1
+      ],
+      "height": 1.78,
+      "keys": [
+        {
+          "t": 0.0,
+          "pos": [
+            -3.0,
+            4.4,
+            0
+          ],
+          "yaw": 0
+        },
+        {
+          "t": 3.0,
+          "pos": [
+            -1.4,
+            0.6,
+            0
+          ],
+          "yaw": 20
+        },
+        {
+          "t": 3.6,
+          "pos": [
+            -0.9,
+            -0.2,
+            0
+          ],
+          "yaw": 0,
+          "head_yaw": 0
+        },
+        {
+          "t": 6.0,
+          "pos": [
+            -0.9,
+            -0.2,
+            0
+          ],
+          "yaw": 0,
+          "head_yaw": 25
+        }
+      ],
+      "hand_keys": [
+        {
+          "t": 0,
+          "pos": [
+            0.25,
+            -0.05,
+            0.95
+          ]
+        },
+        {
+          "t": 4.5,
+          "pos": [
+            0.3,
+            -0.45,
+            1.4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "F1",
+      "label": "figurante sentado",
+      "color": [
+        0.5,
+        0.2,
+        0.75
+      ],
+      "height": 1.28,
+      "keys": [
+        {
+          "t": 0,
+          "pos": [
+            0.8,
+            0.1,
+            0
+          ],
+          "yaw": 180,
+          "head_pitch": 28
+        },
+        {
+          "t": 4.8,
+          "pos": [
+            0.8,
+            0.1,
+            0
+          ],
+          "yaw": 180,
+          "head_pitch": -5
+        }
+      ]
+    }
   ],
   "objects": [
-    {"id": "puerta", "shape": "box", "size": [1.0, 0.06, 2.1], "location": [-3.0, 3.97, 1.05], "pivot": [-3.5, 3.97, 0], "color": [0.22, 0.15, 0.1],
-     "keys": [{"t": 0.3, "rot": [0, 0, 0]}, {"t": 0.6, "rot": [0, 0, -100]}]},
-    {"id": "titulo", "shape": "text", "text": "NO ESPERO", "size": 0.4, "location": [-3.0, 5.6, 1.5], "color": [1.0, 0.12, 0.08], "emission": 4,
-     "visible": [[0.6, 2.5]]}
+    {
+      "id": "puerta",
+      "shape": "box",
+      "size": [
+        1.0,
+        0.06,
+        2.1
+      ],
+      "location": [
+        -3.0,
+        3.97,
+        1.05
+      ],
+      "pivot": [
+        -3.5,
+        3.97,
+        0
+      ],
+      "color": [
+        0.22,
+        0.15,
+        0.1
+      ],
+      "keys": [
+        {
+          "t": 0.3,
+          "rot": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "t": 0.6,
+          "rot": [
+            0,
+            0,
+            -100
+          ]
+        }
+      ]
+    }
   ],
   "shots": [
-    {"id": "P1", "start": 0.0, "end": 3.0, "lens_mm": 24, "size": "low-angle wide with foreground layers",
-     "move": "push-in toward the door that slows down, tilting up as it opens",
-     "motivation": "the impact of the arrival",
-     "dof": {"fstop": 2.8, "focus": [{"t": 0, "distance": 4.0}, {"t": 3, "distance": 2.2}]},
-     "camera": [{"t": 0.0, "pos": [-1.4, 0.2, 0.6], "look_at": [-3.0, 3.9, 1.2]},
-                {"t": 3.0, "pos": [-1.6, -0.6, 0.8], "look_at": [-1.4, 0.6, 1.5]}]},
-    {"id": "P2", "start": 3.0, "end": 6.0, "lens_mm": 50, "size": "medium close-up over the seated man's shoulder",
-     "move": "slow 30-degree orbit to the right, ending on his face", "motivation": "he reads what nobody says",
-     "handheld": 0.006,
-     "camera": [{"t": 3.0, "pos": [0.6, -1.6, 1.5], "look_at": [-0.9, -0.2, 1.6]},
-                {"t": 6.0, "pos": [0.1, -2.0, 1.45], "look_at": [-0.9, -0.2, 1.6]}]}
+    {
+      "id": "P1",
+      "start": 0.0,
+      "end": 3.0,
+      "lens_mm": 24,
+      "size": "low-angle wide with foreground layers",
+      "move": "push-in toward the door that slows down, tilting up as it opens",
+      "motivation": "the impact of the arrival",
+      "dof": {
+        "fstop": 2.8,
+        "focus": [
+          {
+            "t": 0,
+            "distance": 4.0
+          },
+          {
+            "t": 3,
+            "distance": 2.2
+          }
+        ]
+      },
+      "camera": [
+        {
+          "t": 0.0,
+          "pos": [
+            -1.4,
+            0.2,
+            0.6
+          ],
+          "look_at": [
+            -3.0,
+            3.9,
+            1.2
+          ]
+        },
+        {
+          "t": 3.0,
+          "pos": [
+            -1.6,
+            -0.6,
+            0.8
+          ],
+          "look_at": [
+            -1.4,
+            0.6,
+            1.5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "start": 3.0,
+      "end": 6.0,
+      "lens_mm": 50,
+      "size": "medium close-up over the seated man's shoulder",
+      "move": "slow 30-degree orbit to the right, ending on his face",
+      "motivation": "he reads what nobody says",
+      "handheld": 0.006,
+      "camera": [
+        {
+          "t": 3.0,
+          "pos": [
+            0.6,
+            -1.6,
+            1.5
+          ],
+          "look_at": [
+            -0.9,
+            -0.2,
+            1.6
+          ]
+        },
+        {
+          "t": 6.0,
+          "pos": [
+            0.1,
+            -2.0,
+            1.45
+          ],
+          "look_at": [
+            -0.9,
+            -0.2,
+            1.6
+          ]
+        }
+      ]
+    }
   ],
-  "keyframes": [0.6, 4.5],
+  "keyframes": [
+    0.6,
+    4.5
+  ],
   "audio": [
-    {"start": 0.3, "end": 0.6, "type": "efectos", "desc": "a hard wooden door slam, close"},
-    {"start": 0.6, "end": 3.6, "type": "efectos", "desc": "firm footsteps on carpet"},
-    {"start": 3.6, "end": 6.0, "type": "silencio", "desc": "room tone"},
-    {"start": 0.0, "end": 6.0, "type": "musica", "desc": "in post"}
+    {
+      "start": 0.3,
+      "end": 0.6,
+      "type": "efectos",
+      "desc": "a hard wooden door slam, close"
+    },
+    {
+      "start": 0.6,
+      "end": 3.6,
+      "type": "efectos",
+      "desc": "firm footsteps on carpet"
+    },
+    {
+      "start": 3.6,
+      "end": 6.0,
+      "type": "silencio",
+      "desc": "room tone"
+    },
+    {
+      "start": 0.0,
+      "end": 6.0,
+      "type": "musica",
+      "desc": "in post"
+    }
   ]
 }
